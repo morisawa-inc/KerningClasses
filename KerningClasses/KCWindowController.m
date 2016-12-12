@@ -141,4 +141,8 @@
     [_glyphListOutlineView reloadData];
 }
 
+- (IBAction)performFindPanelAction:(id)sender {
+    [[self window] makeFirstResponder:_searchField];
+}
+
 @end
