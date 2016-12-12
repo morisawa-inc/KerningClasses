@@ -1,0 +1,343 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E71886F41DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */; };
+		E718870A1DC8495500DFABA6 /* KCKerningPair.m in Sources */ = {isa = PBXBuildFile; fileRef = E71887091DC8495500DFABA6 /* KCKerningPair.m */; };
+		E7CCE83C1DC7424900C31BEF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7CCE83B1DC7424900C31BEF /* Cocoa.framework */; };
+		E7CCE8441DC7424900C31BEF /* KerningClassesPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8431DC7424900C31BEF /* KerningClassesPlugin.m */; };
+		E7CCE8471DC7424900C31BEF /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7CCE8461DC7424900C31BEF /* GlyphsCore.framework */; };
+		E7CCE84F1DC7430200C31BEF /* KCWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7CCE84E1DC7430200C31BEF /* KCWindowController.xib */; };
+		E7CCE8521DC7432400C31BEF /* KCWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8511DC7432400C31BEF /* KCWindowController.m */; };
+		E7CCE8571DC7442700C31BEF /* KCKerningEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8541DC7442700C31BEF /* KCKerningEntry.m */; };
+		E7CCE8581DC7442700C31BEF /* KCOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8561DC7442700C31BEF /* KCOutlineView.m */; };
+		E7CCE85E1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE85D1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m */; };
+		E7CCE8611DC759E600C31BEF /* KCKerningEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8601DC759E600C31BEF /* KCKerningEntries.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E71886F21DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCGlyphListOutlineViewHandler.h; sourceTree = "<group>"; };
+		E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCGlyphListOutlineViewHandler.m; sourceTree = "<group>"; };
+		E71887081DC8495500DFABA6 /* KCKerningPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKerningPair.h; sourceTree = "<group>"; };
+		E71887091DC8495500DFABA6 /* KCKerningPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKerningPair.m; sourceTree = "<group>"; };
+		E7CCE8381DC7424900C31BEF /* KerningClasses.glyphsPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KerningClasses.glyphsPlugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7CCE83B1DC7424900C31BEF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		E7CCE8421DC7424900C31BEF /* KerningClassesPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KerningClassesPlugin.h; sourceTree = "<group>"; };
+		E7CCE8431DC7424900C31BEF /* KerningClassesPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KerningClassesPlugin.m; sourceTree = "<group>"; };
+		E7CCE8461DC7424900C31BEF /* GlyphsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsCore.framework; path = /Applications/Glyphs.app/Contents/Frameworks/GlyphsCore.framework; sourceTree = "<absolute>"; };
+		E7CCE8481DC7424900C31BEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7CCE84E1DC7430200C31BEF /* KCWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KCWindowController.xib; sourceTree = "<group>"; };
+		E7CCE8501DC7432400C31BEF /* KCWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCWindowController.h; sourceTree = "<group>"; };
+		E7CCE8511DC7432400C31BEF /* KCWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCWindowController.m; sourceTree = "<group>"; };
+		E7CCE8531DC7442700C31BEF /* KCKerningEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKerningEntry.h; sourceTree = "<group>"; };
+		E7CCE8541DC7442700C31BEF /* KCKerningEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKerningEntry.m; sourceTree = "<group>"; };
+		E7CCE8551DC7442700C31BEF /* KCOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCOutlineView.h; sourceTree = "<group>"; };
+		E7CCE8561DC7442700C31BEF /* KCOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCOutlineView.m; sourceTree = "<group>"; };
+		E7CCE85C1DC753EF00C31BEF /* KCKerningOutlineViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKerningOutlineViewHandler.h; sourceTree = "<group>"; };
+		E7CCE85D1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKerningOutlineViewHandler.m; sourceTree = "<group>"; };
+		E7CCE85F1DC759E600C31BEF /* KCKerningEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKerningEntries.h; sourceTree = "<group>"; };
+		E7CCE8601DC759E600C31BEF /* KCKerningEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKerningEntries.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E7CCE8351DC7424900C31BEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7CCE8471DC7424900C31BEF /* GlyphsCore.framework in Frameworks */,
+				E7CCE83C1DC7424900C31BEF /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E7CCE82F1DC7424900C31BEF = {
+			isa = PBXGroup;
+			children = (
+				E7CCE83D1DC7424900C31BEF /* KerningClasses */,
+				E7CCE83A1DC7424900C31BEF /* Frameworks */,
+				E7CCE8391DC7424900C31BEF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E7CCE8391DC7424900C31BEF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E7CCE8381DC7424900C31BEF /* KerningClasses.glyphsPlugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E7CCE83A1DC7424900C31BEF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E7CCE83B1DC7424900C31BEF /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E7CCE83D1DC7424900C31BEF /* KerningClasses */ = {
+			isa = PBXGroup;
+			children = (
+				E7CCE8421DC7424900C31BEF /* KerningClassesPlugin.h */,
+				E7CCE8431DC7424900C31BEF /* KerningClassesPlugin.m */,
+				E71887081DC8495500DFABA6 /* KCKerningPair.h */,
+				E71887091DC8495500DFABA6 /* KCKerningPair.m */,
+				E7CCE8531DC7442700C31BEF /* KCKerningEntry.h */,
+				E7CCE8541DC7442700C31BEF /* KCKerningEntry.m */,
+				E7CCE85F1DC759E600C31BEF /* KCKerningEntries.h */,
+				E7CCE8601DC759E600C31BEF /* KCKerningEntries.m */,
+				E7CCE8551DC7442700C31BEF /* KCOutlineView.h */,
+				E7CCE8561DC7442700C31BEF /* KCOutlineView.m */,
+				E7CCE8501DC7432400C31BEF /* KCWindowController.h */,
+				E7CCE8511DC7432400C31BEF /* KCWindowController.m */,
+				E7CCE85C1DC753EF00C31BEF /* KCKerningOutlineViewHandler.h */,
+				E7CCE85D1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m */,
+				E71886F21DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.h */,
+				E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */,
+				E7CCE84E1DC7430200C31BEF /* KCWindowController.xib */,
+				E7CCE8451DC7424900C31BEF /* Supporting Files */,
+			);
+			path = KerningClasses;
+			sourceTree = "<group>";
+		};
+		E7CCE8451DC7424900C31BEF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E7CCE8481DC7424900C31BEF /* Info.plist */,
+				E7CCE8461DC7424900C31BEF /* GlyphsCore.framework */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E7CCE8371DC7424900C31BEF /* KerningClasses */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E7CCE84B1DC7424900C31BEF /* Build configuration list for PBXNativeTarget "KerningClasses" */;
+			buildPhases = (
+				E7CCE8341DC7424900C31BEF /* Sources */,
+				E7CCE8351DC7424900C31BEF /* Frameworks */,
+				E7CCE8361DC7424900C31BEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KerningClasses;
+			productName = CSKerningClasses;
+			productReference = E7CCE8381DC7424900C31BEF /* KerningClasses.glyphsPlugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E7CCE8301DC7424900C31BEF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = "";
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "Morisawa Inc.";
+				TargetAttributes = {
+					E7CCE8371DC7424900C31BEF = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 662PVPVA3N;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = E7CCE8331DC7424900C31BEF /* Build configuration list for PBXProject "KerningClasses" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E7CCE82F1DC7424900C31BEF;
+			productRefGroup = E7CCE8391DC7424900C31BEF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E7CCE8371DC7424900C31BEF /* KerningClasses */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E7CCE8361DC7424900C31BEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7CCE84F1DC7430200C31BEF /* KCWindowController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E7CCE8341DC7424900C31BEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7CCE85E1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m in Sources */,
+				E718870A1DC8495500DFABA6 /* KCKerningPair.m in Sources */,
+				E7CCE8441DC7424900C31BEF /* KerningClassesPlugin.m in Sources */,
+				E7CCE8521DC7432400C31BEF /* KCWindowController.m in Sources */,
+				E7CCE8571DC7442700C31BEF /* KCKerningEntry.m in Sources */,
+				E7CCE8611DC759E600C31BEF /* KCKerningEntries.m in Sources */,
+				E71886F41DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m in Sources */,
+				E7CCE8581DC7442700C31BEF /* KCOutlineView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E7CCE8491DC7424900C31BEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		E7CCE84A1DC7424900C31BEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+			};
+			name = Release;
+		};
+		E7CCE84C1DC7424900C31BEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "~/Library/Application Support/Glyphs/Plugins";
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "~/Library/Application Support/Glyphs/Plugins";
+				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_APPS_DIR)/Glyphs.app/Contents/Frameworks";
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				INSTALL_PATH = /;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.morisawa.$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = glyphsPlugin;
+			};
+			name = Debug;
+		};
+		E7CCE84D1DC7424900C31BEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_APPS_DIR)/Glyphs.app/Contents/Frameworks";
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				INSTALL_PATH = /;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.morisawa.$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = glyphsPlugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E7CCE8331DC7424900C31BEF /* Build configuration list for PBXProject "KerningClasses" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7CCE8491DC7424900C31BEF /* Debug */,
+				E7CCE84A1DC7424900C31BEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E7CCE84B1DC7424900C31BEF /* Build configuration list for PBXNativeTarget "KerningClasses" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7CCE84C1DC7424900C31BEF /* Debug */,
+				E7CCE84D1DC7424900C31BEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E7CCE8301DC7424900C31BEF /* Project object */;
+}
