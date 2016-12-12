@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
@@ -158,6 +158,9 @@
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="disableIndentation" value="NO"/>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <outlet property="nextKeyView" destination="u8f-7V-J2L" id="3cf-YU-WX2"/>
+                                            </connections>
                                         </outlineView>
                                     </subviews>
                                 </clipView>
@@ -249,6 +252,9 @@
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="disableIndentation" value="YES"/>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <outlet property="nextKeyView" destination="Lli-GB-hwZ" id="XJC-ne-WGE"/>
+                                            </connections>
                                         </outlineView>
                                     </subviews>
                                     <nil key="backgroundColor"/>
@@ -302,6 +308,7 @@
             </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="fIn-0q-p8P"/>
+                <outlet property="initialFirstResponder" destination="Lli-GB-hwZ" id="xLP-h5-jmf"/>
             </connections>
             <point key="canvasLocation" x="71" y="89.5"/>
         </window>
