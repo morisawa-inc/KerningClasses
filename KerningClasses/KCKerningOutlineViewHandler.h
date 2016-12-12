@@ -29,5 +29,6 @@
 @end
 
 @protocol KCKerningOutlineViewHandlerDataSource <NSObject>
+- (NSArray<NSSortDescriptor *> *)sortDescriptorsForKerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler;
 - (NSArray<KCKerningEntry *> *)entriesForKerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler;
 @end

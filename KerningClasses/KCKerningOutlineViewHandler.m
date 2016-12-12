@@ -11,6 +11,7 @@
 
 @interface KCKerningOutlineViewHandler ()
 @property (nonatomic, readonly) NSArray<KCKerningEntry *> *entries;
+@property (nonatomic, readonly) BOOL shouldPreventReloadingData;
 @end
 
 @implementation KCKerningOutlineViewHandler
@@ -21,7 +22,14 @@
 }
 
 - (void)reloadData {
-    _entries = [_dataSource entriesForKerningOutlineViewHandler:self];
+    if (!_shouldPreventReloadingData) {
+        NSArray<NSSortDescriptor *> *sortDescriptors = [_dataSource sortDescriptorsForKerningOutlineViewHandler:self];
+        if (sortDescriptors) {
+            _entries = [[_dataSource entriesForKerningOutlineViewHandler:self] sortedArrayUsingDescriptors:sortDescriptors];
+        } else {
+            _entries = [_dataSource entriesForKerningOutlineViewHandler:self];
+        }
+    }
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
@@ -53,7 +61,9 @@
 
 -(void)outlineView:(NSOutlineView *)outlineView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
     _entries = [_entries sortedArrayUsingDescriptors:[outlineView sortDescriptors]];
+    _shouldPreventReloadingData = YES;
     [outlineView reloadData];
+    _shouldPreventReloadingData = NO;
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification {

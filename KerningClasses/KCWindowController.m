@@ -85,6 +85,10 @@
     [_glyphListOutlineView reloadData];
 }
 
+- (NSArray<NSSortDescriptor *> *)sortDescriptorsForKerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler {
+    return [_kerningOutlineView sortDescriptors];
+}
+
 - (NSArray<KCKerningEntry *> *)entriesForKerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler {
     if (_currentDocument) {
         GSFontMaster *fontMaster = [_currentDocument selectedFontMaster];
