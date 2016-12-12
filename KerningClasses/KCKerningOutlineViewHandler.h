@@ -26,6 +26,7 @@
 
 @protocol KCKerningOutlineViewHandlerDelegate <NSObject>
 - (void)kerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler didSelectRowWithLeftIdentifiers:(NSArray<NSString *> *)leftIdentifiers rightIdentifiers:(NSArray<NSString *> *)rightIdentifiers;
+- (void)kerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler shouldDisplayTextInTabForEntries:(NSArray<KCKerningEntry *> *)entries;
 @end
 
 @protocol KCKerningOutlineViewHandlerDataSource <NSObject>

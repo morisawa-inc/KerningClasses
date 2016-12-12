@@ -21,6 +21,10 @@
 @property(retain, nonatomic) GSFont *font;
 @end
 
+@interface GSTextStorage : NSObject
+@property(nonatomic) NSRange selectedRange;
+@end
+
 @interface NSView (GSGraphicViewAdditions)
 @property(nonatomic) NSString *displayString;
 @end
@@ -121,11 +125,28 @@
     [_glyphListOutlineView expandItem:_rightGlyphs expandChildren:YES];
     
     NSString *displayString = [NSString stringWithFormat:@"/%@ /%@", [[_leftGlyphs firstObject] name], [[_rightGlyphs firstObject] name]];
-    [[[[_currentDocument windowController] activeEditViewController] graphicView] setDisplayString:displayString];
+    [self setDisplayString:displayString];
+}
+
+- (void)kerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler shouldDisplayTextInTabForEntries:(NSArray<KCKerningEntry *> *)entries {
+    NSMutableArray *mutableTextLines = [[NSMutableArray alloc] initWithCapacity:0];
+    for (KCKerningEntry *entry in entries) {
+        NSMutableString *mutableDisplayString = [[NSMutableString alloc] initWithCapacity:0];
+        NSArray<GSGlyph *> *leftGlyphs  = [_entries glyphsForIdentifier:[entry left]];
+        NSArray<GSGlyph *> *rightGlyphs = [_entries glyphsForIdentifier:[entry right]];
+        for (GSGlyph *leftGlyph in leftGlyphs) {
+            for (GSGlyph *rightGlyph in rightGlyphs) {
+                [mutableDisplayString appendFormat:@"/%@ /%@", [leftGlyph name], [rightGlyph name]];
+            }
+        }
+        [mutableTextLines addObject:[mutableDisplayString copy]];
+    }
+    NSString *displayString = [mutableTextLines componentsJoinedByString:@"\n"];
+    [self setDisplayString:displayString];
 }
 
 - (void)glyphListOutlineViewHandler:(KCGlyphListOutlineViewHandler *)handler shouldDisplayTextInTab:(NSString *)text {
-    [[[[_currentDocument windowController] activeEditViewController] graphicView] setDisplayString:text];
+    [self setDisplayString:text];
 }
 
 - (NSArray<GSGlyph *> *)leftGlyphsForGlyphListOutlineViewHandler:(KCGlyphListOutlineViewHandler *)handler {
@@ -143,6 +164,32 @@
 
 - (IBAction)performFindPanelAction:(id)sender {
     [[self window] makeFirstResponder:_searchField];
+}
+
+- (NSString *)displayString {
+    return [[[[_currentDocument windowController] activeEditViewController] graphicView] displayString];
+}
+
+- (void)setDisplayString:(NSString *)aDisplayString {
+    NSRange range = [[[[[_currentDocument windowController] activeEditViewController] graphicView] textStorage] selectedRange];
+    NSString *currentDisplayString = [self displayString];
+    if (range.length == 0) {
+        range = [currentDisplayString lineRangeForRange:range];
+        if (range.length > 0) {
+            if ([[currentDisplayString substringWithRange:NSMakeRange(range.location + range.length - 1, 1)] isEqualToString:@"\n"]) {
+                range.length -= 1;
+            }
+        }
+    }
+    if (range.location > 0) {
+        if (range.location < [currentDisplayString length]) {
+            [[[[_currentDocument windowController] activeEditViewController] graphicView] setDisplayString:[currentDisplayString stringByReplacingCharactersInRange:range withString:aDisplayString]];
+        } else {
+            [[[[_currentDocument windowController] activeEditViewController] graphicView] setDisplayString:[currentDisplayString stringByAppendingString:aDisplayString]];
+        }
+    } else {
+        [[[[_currentDocument windowController] activeEditViewController] graphicView] setDisplayString:aDisplayString];
+    }
 }
 
 @end

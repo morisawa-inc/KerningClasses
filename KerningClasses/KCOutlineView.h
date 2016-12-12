@@ -8,8 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol KCOutlineViewDelegate;
+
 @interface KCOutlineView : NSOutlineView
 
 @property (nonatomic) IBInspectable BOOL disableIndentation;
 
+@end
+
+@protocol KCOutlineViewDelegate <NSObject>
+- (void)outlineView:(NSOutlineView *)outlineView didPressTriggerKeyWithItems:(NSArray *)items;
 @end

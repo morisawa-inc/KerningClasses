@@ -25,4 +25,24 @@
     [super reloadData];
 }
 
+- (void)keyDown:(NSEvent *)event {
+    if (([event keyCode] == 36 || [event keyCode] == 76) && [event modifierFlags] & NSShiftKeyMask) {
+        NSIndexSet *selection = [self selectedRowIndexes];
+        if ([selection count] > 0) {
+            if ([(id)_delegate respondsToSelector:@selector(outlineView:didPressTriggerKeyWithItems:)]) {
+                NSMutableArray *mutableItems = [[NSMutableArray alloc] init];
+                [selection enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * stop) {
+                    id item = [self itemAtRow:idx];
+                    if (item) {
+                        [mutableItems addObject:item];
+                    }
+                }];
+                [(id)_delegate outlineView:self didPressTriggerKeyWithItems:[mutableItems copy]];
+                return;
+            }
+        }
+    }
+    [super keyDown:event];
+}
+
 @end

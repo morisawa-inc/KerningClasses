@@ -79,4 +79,17 @@
     [_delegate kerningOutlineViewHandler:self didSelectRowWithLeftIdentifiers:[mutableLeftIdentifiers array] rightIdentifiers:[mutableRightIdentifiers array]];
 }
 
+- (void)outlineView:(NSOutlineView *)outlineView didPressTriggerKeyWithItems:(NSArray *)items {
+    NSMutableOrderedSet *mutableLeftIdentifiers  = [[NSMutableOrderedSet alloc] initWithCapacity:0];
+    NSMutableOrderedSet *mutableRightIdentifiers = [[NSMutableOrderedSet alloc] initWithCapacity:0];
+    [items enumerateObjectsUsingBlock:^(id  _Nonnull object, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([object isKindOfClass:[KCKerningEntry class]]) {
+            KCKerningEntry *entry = (KCKerningEntry *)object;
+            [mutableLeftIdentifiers  addObject:[entry left]];
+            [mutableRightIdentifiers addObject:[entry right]];
+        }
+    }];
+    [_delegate kerningOutlineViewHandler:self shouldDisplayTextInTabForEntries:items];
+}
+
 @end
