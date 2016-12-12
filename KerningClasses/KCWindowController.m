@@ -62,6 +62,9 @@
     [_glyphListOutlineView setDataSource:_glyphListOutlineViewHandler];
     [[self window] setLevel:NSFloatingWindowLevel];
     [self reloadData];
+    
+    [self setShouldCascadeWindows:NO];
+    [self setWindowFrameAutosaveName:NSStringFromClass([self class])];
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
