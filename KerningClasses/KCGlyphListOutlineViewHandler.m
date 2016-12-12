@@ -127,5 +127,11 @@
     }
 }
 
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item {
+    if (item == _leftGlyphs || item == _rightGlyphs) {
+        return NO;
+    }
+    return YES;
+}
 
 @end
