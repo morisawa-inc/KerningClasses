@@ -12,9 +12,17 @@
 @interface KCKerningOutlineViewHandler ()
 @property (nonatomic, readonly) NSArray<KCKerningEntry *> *entries;
 @property (nonatomic, readonly) BOOL shouldPreventReloadingData;
+@property (nonatomic, readonly) NSMutableSet<KCKerningEntry *> *mutableExpandedItems;
 @end
 
 @implementation KCKerningOutlineViewHandler
+
+- (instancetype)init {
+    if ((self = [super init])) {
+        _mutableExpandedItems = [[NSMutableSet alloc] init];
+    }
+    return self;
+}
 
 - (void)setDataSource:(id<KCKerningOutlineViewHandlerDataSource>)aDataSource {
     _dataSource = aDataSource;
@@ -30,6 +38,10 @@
             _entries = [_dataSource entriesForKerningOutlineViewHandler:self];
         }
     }
+}
+
+- (void)resetExpandedItems {
+    [_mutableExpandedItems removeAllObjects];
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
@@ -80,16 +92,38 @@
 }
 
 - (void)outlineView:(NSOutlineView *)outlineView didPressTriggerKeyWithItems:(NSArray *)items {
-    NSMutableOrderedSet *mutableLeftIdentifiers  = [[NSMutableOrderedSet alloc] initWithCapacity:0];
-    NSMutableOrderedSet *mutableRightIdentifiers = [[NSMutableOrderedSet alloc] initWithCapacity:0];
-    [items enumerateObjectsUsingBlock:^(id  _Nonnull object, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([object isKindOfClass:[KCKerningEntry class]]) {
-            KCKerningEntry *entry = (KCKerningEntry *)object;
-            [mutableLeftIdentifiers  addObject:[entry left]];
-            [mutableRightIdentifiers addObject:[entry right]];
-        }
-    }];
     [_delegate kerningOutlineViewHandler:self shouldDisplayTextInTabForEntries:items];
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView didDoubleClickWithItems:(NSArray *)items {
+    [self outlineView:outlineView didPressTriggerKeyWithItems:items];
+}
+
+- (NSArray<id> *)expandedItems {
+    return [_mutableExpandedItems allObjects];
+}
+
+- (NSInteger)rowForItem:(id)item {
+    NSUInteger i = 0;
+    for (KCKerningEntry *entry in _entries) {
+        if ([entry isEqual:item]) return i;
+        for (KCKerningEntry *exception in [entry exceptions]) {
+            if ([exception isEqual:item]) return i;
+            ++i;
+        }
+        ++i;
+    }
+    return -1;
+}
+
+- (void)outlineViewItemDidExpand:(NSNotification *)notification {
+    KCKerningEntry *entry = [[notification userInfo] objectForKey:@"NSObject"];
+    if (entry) [_mutableExpandedItems addObject:entry];
+}
+
+- (void)outlineViewItemWillCollapse:(NSNotification *)notification {
+    KCKerningEntry *entry = [[notification userInfo] objectForKey:@"NSObject"];
+    if (entry) [_mutableExpandedItems removeObject:entry];
 }
 
 @end

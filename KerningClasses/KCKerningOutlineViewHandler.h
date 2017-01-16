@@ -20,7 +20,12 @@
 @property (nonatomic, weak) id<KCKerningOutlineViewHandlerDelegate> delegate;
 @property (nonatomic, weak) id<KCKerningOutlineViewHandlerDataSource> dataSource;
 
+- (NSArray<id> *)expandedItems;
+
 - (void)reloadData;
+- (void)resetExpandedItems;
+
+- (NSInteger)rowForItem:(id)item;
 
 @end
 

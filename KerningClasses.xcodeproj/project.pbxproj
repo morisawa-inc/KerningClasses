@@ -9,15 +9,29 @@
 /* Begin PBXBuildFile section */
 		E71886F41DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */; };
 		E718870A1DC8495500DFABA6 /* KCKerningPair.m in Sources */ = {isa = PBXBuildFile; fileRef = E71887091DC8495500DFABA6 /* KCKerningPair.m */; };
+		E797B9EB1E0A126600AF08E1 /* RSJumpBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9E41E0A126600AF08E1 /* RSJumpBar.m */; };
+		E797B9EC1E0A126600AF08E1 /* RSJumpBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9E61E0A126600AF08E1 /* RSJumpBarButton.m */; };
+		E797B9ED1E0A126600AF08E1 /* RSJumpBarChevron.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9E71E0A126600AF08E1 /* RSJumpBarChevron.png */; };
+		E797B9EE1E0A126600AF08E1 /* RSJumpBarChevron@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9E81E0A126600AF08E1 /* RSJumpBarChevron@2x.png */; };
+		E797B9EF1E0A126600AF08E1 /* RSJumpBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9EA1E0A126600AF08E1 /* RSJumpBarItem.m */; };
+		E797B9F21E0A23F100AF08E1 /* KCJumpBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9F11E0A23F100AF08E1 /* KCJumpBar.m */; };
+		E797B9F51E0A251D00AF08E1 /* KCFontMasterStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9F41E0A251D00AF08E1 /* KCFontMasterStore.m */; };
+		E797B9FA1E0A455900AF08E1 /* GSFontIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9F81E0A455900AF08E1 /* GSFontIcon.png */; };
+		E797B9FB1E0A455900AF08E1 /* GSFontIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9F91E0A455900AF08E1 /* GSFontIcon@2x.png */; };
+		E797B9FF1E0A5B5F00AF08E1 /* GSFontMasterIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9FD1E0A5B5F00AF08E1 /* GSFontMasterIcon.png */; };
+		E797BA001E0A5B5F00AF08E1 /* GSFontMasterIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9FE1E0A5B5F00AF08E1 /* GSFontMasterIcon@2x.png */; };
+		E797BA011E0A603200AF08E1 /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7CCE8461DC7424900C31BEF /* GlyphsCore.framework */; };
+		E7B895B71E0E5442009357CE /* KCKerningGroups.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7B895B61E0E5442009357CE /* KCKerningGroups.mm */; };
 		E7CCE83C1DC7424900C31BEF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7CCE83B1DC7424900C31BEF /* Cocoa.framework */; };
 		E7CCE8441DC7424900C31BEF /* KerningClassesPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8431DC7424900C31BEF /* KerningClassesPlugin.m */; };
-		E7CCE8471DC7424900C31BEF /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7CCE8461DC7424900C31BEF /* GlyphsCore.framework */; };
 		E7CCE84F1DC7430200C31BEF /* KCWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7CCE84E1DC7430200C31BEF /* KCWindowController.xib */; };
 		E7CCE8521DC7432400C31BEF /* KCWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8511DC7432400C31BEF /* KCWindowController.m */; };
 		E7CCE8571DC7442700C31BEF /* KCKerningEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8541DC7442700C31BEF /* KCKerningEntry.m */; };
 		E7CCE8581DC7442700C31BEF /* KCOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8561DC7442700C31BEF /* KCOutlineView.m */; };
 		E7CCE85E1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE85D1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m */; };
 		E7CCE8611DC759E600C31BEF /* KCKerningEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8601DC759E600C31BEF /* KCKerningEntries.m */; };
+		E7D0D5141E27388C0074E78B /* KCUserDefinedColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E7D0D5131E27388C0074E78B /* KCUserDefinedColors.m */; };
+		E7D0D5161E2748E60074E78B /* Colors.json in Resources */ = {isa = PBXBuildFile; fileRef = E7D0D5151E2748E60074E78B /* Colors.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +39,24 @@
 		E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCGlyphListOutlineViewHandler.m; sourceTree = "<group>"; };
 		E71887081DC8495500DFABA6 /* KCKerningPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKerningPair.h; sourceTree = "<group>"; };
 		E71887091DC8495500DFABA6 /* KCKerningPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKerningPair.m; sourceTree = "<group>"; };
+		E756CAB91E0A84DF004460C5 /* KCFontMasterStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCFontMasterStore.h; sourceTree = "<group>"; };
+		E797B9E31E0A126600AF08E1 /* RSJumpBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSJumpBar.h; sourceTree = "<group>"; };
+		E797B9E41E0A126600AF08E1 /* RSJumpBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSJumpBar.m; sourceTree = "<group>"; };
+		E797B9E51E0A126600AF08E1 /* RSJumpBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSJumpBarButton.h; sourceTree = "<group>"; };
+		E797B9E61E0A126600AF08E1 /* RSJumpBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSJumpBarButton.m; sourceTree = "<group>"; };
+		E797B9E71E0A126600AF08E1 /* RSJumpBarChevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RSJumpBarChevron.png; sourceTree = "<group>"; };
+		E797B9E81E0A126600AF08E1 /* RSJumpBarChevron@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RSJumpBarChevron@2x.png"; sourceTree = "<group>"; };
+		E797B9E91E0A126600AF08E1 /* RSJumpBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSJumpBarItem.h; sourceTree = "<group>"; };
+		E797B9EA1E0A126600AF08E1 /* RSJumpBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSJumpBarItem.m; sourceTree = "<group>"; };
+		E797B9F01E0A23F100AF08E1 /* KCJumpBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCJumpBar.h; sourceTree = "<group>"; };
+		E797B9F11E0A23F100AF08E1 /* KCJumpBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCJumpBar.m; sourceTree = "<group>"; };
+		E797B9F41E0A251D00AF08E1 /* KCFontMasterStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCFontMasterStore.m; sourceTree = "<group>"; };
+		E797B9F81E0A455900AF08E1 /* GSFontIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GSFontIcon.png; sourceTree = "<group>"; };
+		E797B9F91E0A455900AF08E1 /* GSFontIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSFontIcon@2x.png"; sourceTree = "<group>"; };
+		E797B9FD1E0A5B5F00AF08E1 /* GSFontMasterIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GSFontMasterIcon.png; sourceTree = "<group>"; };
+		E797B9FE1E0A5B5F00AF08E1 /* GSFontMasterIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GSFontMasterIcon@2x.png"; sourceTree = "<group>"; };
+		E7B895B51E0E5442009357CE /* KCKerningGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKerningGroups.h; sourceTree = "<group>"; };
+		E7B895B61E0E5442009357CE /* KCKerningGroups.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KCKerningGroups.mm; sourceTree = "<group>"; };
 		E7CCE8381DC7424900C31BEF /* KerningClasses.glyphsPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KerningClasses.glyphsPlugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7CCE83B1DC7424900C31BEF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E7CCE8421DC7424900C31BEF /* KerningClassesPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KerningClassesPlugin.h; sourceTree = "<group>"; };
@@ -42,6 +74,9 @@
 		E7CCE85D1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKerningOutlineViewHandler.m; sourceTree = "<group>"; };
 		E7CCE85F1DC759E600C31BEF /* KCKerningEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKerningEntries.h; sourceTree = "<group>"; };
 		E7CCE8601DC759E600C31BEF /* KCKerningEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKerningEntries.m; sourceTree = "<group>"; };
+		E7D0D5121E27388C0074E78B /* KCUserDefinedColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCUserDefinedColors.h; sourceTree = "<group>"; };
+		E7D0D5131E27388C0074E78B /* KCUserDefinedColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCUserDefinedColors.m; sourceTree = "<group>"; };
+		E7D0D5151E2748E60074E78B /* Colors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Colors.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,14 +84,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7CCE8471DC7424900C31BEF /* GlyphsCore.framework in Frameworks */,
 				E7CCE83C1DC7424900C31BEF /* Cocoa.framework in Frameworks */,
+				E797BA011E0A603200AF08E1 /* GlyphsCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E797B9E21E0A126600AF08E1 /* RSJumpBar */ = {
+			isa = PBXGroup;
+			children = (
+				E797B9E31E0A126600AF08E1 /* RSJumpBar.h */,
+				E797B9E41E0A126600AF08E1 /* RSJumpBar.m */,
+				E797B9E51E0A126600AF08E1 /* RSJumpBarButton.h */,
+				E797B9E61E0A126600AF08E1 /* RSJumpBarButton.m */,
+				E797B9E71E0A126600AF08E1 /* RSJumpBarChevron.png */,
+				E797B9E81E0A126600AF08E1 /* RSJumpBarChevron@2x.png */,
+				E797B9E91E0A126600AF08E1 /* RSJumpBarItem.h */,
+				E797B9EA1E0A126600AF08E1 /* RSJumpBarItem.m */,
+			);
+			path = RSJumpBar;
+			sourceTree = "<group>";
+		};
 		E7CCE82F1DC7424900C31BEF = {
 			isa = PBXGroup;
 			children = (
@@ -85,8 +135,11 @@
 		E7CCE83D1DC7424900C31BEF /* KerningClasses */ = {
 			isa = PBXGroup;
 			children = (
+				E797B9E21E0A126600AF08E1 /* RSJumpBar */,
 				E7CCE8421DC7424900C31BEF /* KerningClassesPlugin.h */,
 				E7CCE8431DC7424900C31BEF /* KerningClassesPlugin.m */,
+				E7B895B51E0E5442009357CE /* KCKerningGroups.h */,
+				E7B895B61E0E5442009357CE /* KCKerningGroups.mm */,
 				E71887081DC8495500DFABA6 /* KCKerningPair.h */,
 				E71887091DC8495500DFABA6 /* KCKerningPair.m */,
 				E7CCE8531DC7442700C31BEF /* KCKerningEntry.h */,
@@ -95,12 +148,22 @@
 				E7CCE8601DC759E600C31BEF /* KCKerningEntries.m */,
 				E7CCE8551DC7442700C31BEF /* KCOutlineView.h */,
 				E7CCE8561DC7442700C31BEF /* KCOutlineView.m */,
+				E797B9F01E0A23F100AF08E1 /* KCJumpBar.h */,
+				E797B9F11E0A23F100AF08E1 /* KCJumpBar.m */,
+				E756CAB91E0A84DF004460C5 /* KCFontMasterStore.h */,
+				E797B9F41E0A251D00AF08E1 /* KCFontMasterStore.m */,
 				E7CCE8501DC7432400C31BEF /* KCWindowController.h */,
 				E7CCE8511DC7432400C31BEF /* KCWindowController.m */,
 				E7CCE85C1DC753EF00C31BEF /* KCKerningOutlineViewHandler.h */,
 				E7CCE85D1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m */,
 				E71886F21DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.h */,
 				E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */,
+				E7D0D5121E27388C0074E78B /* KCUserDefinedColors.h */,
+				E7D0D5131E27388C0074E78B /* KCUserDefinedColors.m */,
+				E797B9F81E0A455900AF08E1 /* GSFontIcon.png */,
+				E797B9F91E0A455900AF08E1 /* GSFontIcon@2x.png */,
+				E797B9FD1E0A5B5F00AF08E1 /* GSFontMasterIcon.png */,
+				E797B9FE1E0A5B5F00AF08E1 /* GSFontMasterIcon@2x.png */,
 				E7CCE84E1DC7430200C31BEF /* KCWindowController.xib */,
 				E7CCE8451DC7424900C31BEF /* Supporting Files */,
 			);
@@ -110,6 +173,7 @@
 		E7CCE8451DC7424900C31BEF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E7D0D5151E2748E60074E78B /* Colors.json */,
 				E7CCE8481DC7424900C31BEF /* Info.plist */,
 				E7CCE8461DC7424900C31BEF /* GlyphsCore.framework */,
 			);
@@ -175,6 +239,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E797B9EE1E0A126600AF08E1 /* RSJumpBarChevron@2x.png in Resources */,
+				E797B9ED1E0A126600AF08E1 /* RSJumpBarChevron.png in Resources */,
+				E797BA001E0A5B5F00AF08E1 /* GSFontMasterIcon@2x.png in Resources */,
+				E797B9FA1E0A455900AF08E1 /* GSFontIcon.png in Resources */,
+				E797B9FF1E0A5B5F00AF08E1 /* GSFontMasterIcon.png in Resources */,
+				E7D0D5161E2748E60074E78B /* Colors.json in Resources */,
+				E797B9FB1E0A455900AF08E1 /* GSFontIcon@2x.png in Resources */,
 				E7CCE84F1DC7430200C31BEF /* KCWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,13 +258,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7CCE85E1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m in Sources */,
+				E797B9F51E0A251D00AF08E1 /* KCFontMasterStore.m in Sources */,
 				E718870A1DC8495500DFABA6 /* KCKerningPair.m in Sources */,
 				E7CCE8441DC7424900C31BEF /* KerningClassesPlugin.m in Sources */,
 				E7CCE8521DC7432400C31BEF /* KCWindowController.m in Sources */,
 				E7CCE8571DC7442700C31BEF /* KCKerningEntry.m in Sources */,
 				E7CCE8611DC759E600C31BEF /* KCKerningEntries.m in Sources */,
+				E797B9EC1E0A126600AF08E1 /* RSJumpBarButton.m in Sources */,
+				E797B9EF1E0A126600AF08E1 /* RSJumpBarItem.m in Sources */,
 				E71886F41DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m in Sources */,
+				E7B895B71E0E5442009357CE /* KCKerningGroups.mm in Sources */,
+				E7D0D5141E27388C0074E78B /* KCUserDefinedColors.m in Sources */,
+				E797B9F21E0A23F100AF08E1 /* KCJumpBar.m in Sources */,
 				E7CCE8581DC7442700C31BEF /* KCOutlineView.m in Sources */,
+				E797B9EB1E0A126600AF08E1 /* RSJumpBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

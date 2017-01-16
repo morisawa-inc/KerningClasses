@@ -32,8 +32,8 @@
 - (BOOL)isEqual:(id)object {
     BOOL isEqual = NO;
     if ([object isKindOfClass:[self class]]) {
-        if ([((typeof(self))object)->_left isEqualToString:_left]) {
-            if ([((typeof(self))object)->_right isEqualToString:_right]) {
+        if (((typeof(self))object)->_left == _left || [((typeof(self))object)->_left isEqualToString:_left]) {
+            if (((typeof(self))object)->_right == _right || [((typeof(self))object)->_right isEqualToString:_right]) {
                 isEqual = YES;
             }
         }

@@ -10,6 +10,22 @@
 
 @implementation KCOutlineView
 
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    if ((self = [super initWithCoder:coder])) {
+        [self setTarget:self];
+        [self setDoubleAction:@selector(handleDoubleAction:)];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(NSRect)frameRect {
+    if ((self = [super initWithFrame:frameRect])) {
+        [self setTarget:self];
+        [self setDoubleAction:@selector(handleDoubleAction:)];
+    }
+    return self;
+}
+
 - (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row {
     NSRect superFrame = [super frameOfCellAtColumn:column row:row];
     if (_disableIndentation && column == 0) {
@@ -43,6 +59,51 @@
         }
     }
     [super keyDown:event];
+}
+
+- (void)handleDoubleAction:(id)sender {
+    NSIndexSet *selection = [self selectedRowIndexes];
+    if ([selection count] > 0) {
+        if ([(id)_delegate respondsToSelector:@selector(outlineView:didDoubleClickWithItems:)]) {
+            NSMutableArray *mutableItems = [[NSMutableArray alloc] init];
+            [selection enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * stop) {
+                id item = [self itemAtRow:idx];
+                if (item) {
+                    [mutableItems addObject:item];
+                }
+            }];
+            [(id)_delegate outlineView:self didDoubleClickWithItems:[mutableItems copy]];
+            return;
+        }
+    }
+}
+
+@end
+
+@interface KCOutlineTextFieldCell () {
+@private
+    NSColor *_textColor;
+}
+@end
+
+@implementation KCOutlineTextFieldCell
+
+- (void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle {
+    [super setBackgroundStyle:backgroundStyle];
+    if (backgroundStyle == NSBackgroundStyleDark) {
+        [super setTextColor:[NSColor controlTextColor]];
+    } else {
+        [super setTextColor:_textColor];
+    }
+}
+
+- (void)setTextColor:(NSColor *)textColor {
+    if ([self backgroundStyle] == NSBackgroundStyleDark) {
+        [super setTextColor:[NSColor controlTextColor]];
+    } else {
+        [super setTextColor:textColor];
+    }
+    _textColor = textColor;
 }
 
 @end

@@ -53,7 +53,7 @@
         }
         return _rightGlyphs;
     }
-    return nil;
+    return [NSNull null];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item {

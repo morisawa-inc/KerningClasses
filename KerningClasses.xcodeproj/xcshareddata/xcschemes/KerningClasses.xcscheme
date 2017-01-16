@@ -75,6 +75,11 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <PathRunnable
+         runnableDebuggingMode = "0"
+         BundleIdentifier = "com.GeorgSeifert.Glyphs2"
+         FilePath = "/Applications/Glyphs.app">
+      </PathRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"

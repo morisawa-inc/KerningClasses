@@ -18,4 +18,9 @@
 
 @protocol KCOutlineViewDelegate <NSObject>
 - (void)outlineView:(NSOutlineView *)outlineView didPressTriggerKeyWithItems:(NSArray *)items;
+- (void)outlineView:(NSOutlineView *)outlineView didDoubleClickWithItems:(NSArray *)items;
+@end
+
+@interface KCOutlineTextFieldCell : NSTextFieldCell
+
 @end

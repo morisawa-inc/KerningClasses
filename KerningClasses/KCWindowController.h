@@ -8,26 +8,21 @@
 
 #import <AppKit/AppKit.h>
 #import <GlyphsCore/GlyphsCore.h>
+#import "KCKerningEntry.h"
 
-@class GSDocument;
 @protocol KCWindowControllerDelegate;
-@protocol KCWindowControllerDataSource;
 
 @interface KCWindowController : NSWindowController
 
 @property (nonatomic, weak) id<KCWindowControllerDelegate> delegate;
-@property (nonatomic, weak) id<KCWindowControllerDataSource> dataSource;
 
-- (void)reloadData;
+- (void)revealEntryIfAvailable:(KCKerningEntry *)anEntry;
 
 @end
 
 @protocol KCWindowControllerDelegate <NSObject>
 @optional
 - (void)windowControllerWillClose:(KCWindowController *)windowController;
-@end
-
-@protocol KCWindowControllerDataSource <NSObject>
-@optional
-- (GSDocument *)documentForWindowController:(KCWindowController *)windowController;
+- (void)windowControllerDidMove:(KCWindowController *)windowController;
+- (void)windowControllerDidResize:(KCWindowController *)windowController;
 @end

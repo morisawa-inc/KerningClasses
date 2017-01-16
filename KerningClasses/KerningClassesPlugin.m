@@ -12,10 +12,34 @@
 #import <GlyphsCore/GlyphsCore.h>
 #import <GlyphsCore/GSFont.h>
 #import <GlyphsCore/GSFontMaster.h>
+#import <GlyphsCore/GSWindowControllerProtocol.h>
+#import <GlyphsCore/GSGlyphEditViewProtocol.h>
+#import <GlyphsCore/GSGlyphViewControllerProtocol.h>
+#import <GlyphsCore/GSGlyph.h>
+#import <GlyphsCore/GSLayer.h>
 
-@interface KerningClassesPlugin () <KCWindowControllerDelegate, KCWindowControllerDataSource>
+static NSUInteger NSMutableIndexSetConsumeNewIndex(NSMutableIndexSet *set) {
+    __block NSUInteger index = NSNotFound;
+    [set enumerateRangesUsingBlock:^(NSRange range, BOOL * _Nonnull stop) {
+        if (range.location > 0) {
+            index = 0;
+        } else {
+            index = range.location + range.length;
+        }
+        [set addIndex:index];
+        *stop = YES;
+    }];
+    if (index == NSNotFound) {
+        index = 0;
+        [set addIndex:0];
+    }
+    return index;
+}
+
+@interface KerningClassesPlugin () <KCWindowControllerDelegate>
 @property(nonatomic, readonly) NSMutableArray<NSMenuItem *> *menuItems;
 @property(nonatomic, readonly) GSDocument *document;
+@property(nonatomic, readonly) NSMutableIndexSet *mutableWindowIndexes;
 @end
 
 @interface GSDocument : NSDocument
@@ -32,144 +56,127 @@
     if ((self = [super init])) {
         _windowControllers = [[NSMutableArray alloc] initWithCapacity:0];
         _menuItems = [[NSMutableArray alloc] initWithCapacity:0];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWindowDidBecomeKeyNotification:) name:NSWindowDidBecomeKeyNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWindowDidResignKeyNotification:) name:NSWindowDidResignKeyNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWindowWillCloseNotification:) name:NSWindowWillCloseNotification object:nil];
+        _mutableWindowIndexes = [[NSMutableIndexSet alloc] init];
     }
     return self;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidBecomeKeyNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidResignKeyNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowWillCloseNotification object:nil];
 }
 
 - (NSUInteger)interfaceVersion {
     return 1;
 }
 
-- (NSMenuItem *)windowMenu {
+- (NSMenuItem *)newDocumentMenuItem {
     for (NSMenuItem *menuItem in [[NSApp mainMenu] itemArray]) {
         for (NSMenuItem *submenuItem in [[menuItem submenu] itemArray]) {
-            if ([submenuItem action] == @selector(performMiniaturize:)) { // [Minimize]
-                return menuItem;
+            if ([submenuItem action] == @selector(newDocument:)) { // [New...]
+                return submenuItem;
             }
         }
     }
     return nil;
 }
 
+- (NSMenuItem *)compareFontsMenuItem {
+    for (NSMenuItem *menuItem in [[NSApp mainMenu] itemArray]) {
+        for (NSMenuItem *submenuItem in [[menuItem submenu] itemArray]) {
+            if ([submenuItem action] == NSSelectorFromString(@"compareFonts:")) {
+                return submenuItem;
+            }
+        }
+    }
+    return nil;
+}
+
+
 - (NSString *)title {
-    return NSLocalizedString(@"Kerning Classes", nil);
-}
-
-- (NSString *)titleForIndex:(NSUInteger)anIndex {
-    if ([self numberOfInstances] >= 2) {
-        return [NSString stringWithFormat:@"%@ (%lu)", [self title], anIndex + 1];
-    }
-    return [self title];
-}
-
-- (NSUInteger)numberOfInstances {
-    NSUInteger numberOfInstances = 1;
-    NSNumber *value = [[[NSBundle bundleForClass:[self class]] infoDictionary] objectForKey:@"KCNumberOfInstances"];
-    if (value) {
-        numberOfInstances = MAX([value integerValue], 1);
-    }
-    return numberOfInstances;
+    return NSLocalizedString(@"New Kerning Window", nil);
 }
 
 - (void)loadPlugin {
-    NSMenuItem *windowMenu = [self windowMenu];
-    if (windowMenu) {
-        [[windowMenu submenu] addItem:[NSMenuItem separatorItem]];
-        for (NSUInteger i = 0; i < [self numberOfInstances]; ++i) {
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[self titleForIndex:i] action:@selector(handleShowWindow:) keyEquivalent:@""];
-            [menuItem setTarget:self];
-            [[windowMenu submenu] addItem:menuItem];
-            [_menuItems addObject:menuItem];
-        }
+    NSMenuItem *newDocumentMenuItem = [self newDocumentMenuItem];
+    if (newDocumentMenuItem) {
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[self title] action:@selector(handleNewKerningWindow:) keyEquivalent:@"K"];
+        [menuItem setKeyEquivalentModifierMask: NSShiftKeyMask | NSCommandKeyMask | NSAlternateKeyMask];
+        [menuItem setTarget:self];
+        [[newDocumentMenuItem menu] insertItem:menuItem atIndex:[[newDocumentMenuItem menu] indexOfItem:newDocumentMenuItem] + 1];
+    }
+    NSMenuItem *compareFontsMenuItem = [self compareFontsMenuItem];
+    if (compareFontsMenuItem) {
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Reveal in Kerning Window", nil) action:@selector(handleRevealInKerningWindow:) keyEquivalent:@""];
+        [menuItem setTarget:self];
+        [[compareFontsMenuItem menu] insertItem:menuItem atIndex:[[compareFontsMenuItem menu] indexOfItem:compareFontsMenuItem] + 1];
+        [[compareFontsMenuItem menu] insertItem:[NSMenuItem separatorItem] atIndex:[[compareFontsMenuItem menu] indexOfItem:compareFontsMenuItem] + 1];
     }
 }
 
-- (void)handleShowWindow:(id)sender {
-    NSInteger state = ([(NSMenuItem *)sender state] == NSOffState) ? NSOnState : NSOffState;
-    if (state == NSOnState) {
-        
-    } else {
-        for (NSWindowController *windowController in _windowControllers) {
-            [windowController performSelector:@selector(close) withObject:nil afterDelay:0.0];
-        }
-    }
-    [(NSMenuItem *)sender setState:state];
-    
+- (void)handleNewKerningWindow:(id)sender {
     KCWindowController *windowController = [[KCWindowController alloc] init];
     [windowController setDelegate:self];
-    [windowController setDataSource:self];
-    [[windowController window] center];
     [[windowController window] orderFrontRegardless];
     [[windowController window] makeKeyWindow];
     [windowController showWindow:nil];
-    [_windowControllers addObject:windowController];
-    
-    [self reloadData];
+    NSUInteger index = NSMutableIndexSetConsumeNewIndex(_mutableWindowIndexes);
+    [_windowControllers insertObject:windowController atIndex:index];
+    {
+        NSString *name = [NSString stringWithFormat:@"KerningClassesPluginWindow%lu", index + 1];
+        [[windowController window] setFrameUsingName:name];
+        [[windowController window] setTitle:[NSString stringWithFormat:@"Kerning Window: #%lu", index + 1]];
+    }
+}
+
+- (void)handleRevealInKerningWindow:(id)sender {
+    GSDocument *currentDocument = [[NSDocumentController sharedDocumentController] currentDocument];
+    NSViewController<GSGlyphEditViewControllerProtocol> *editViewController = [(NSViewController<GSWindowControllerProtocol> *)[currentDocument windowController] activeEditViewController];
+    NSView <GSGlyphEditViewProtocol, NSTextInputClient> *graphicView = [editViewController graphicView];
+    NSUInteger location = [graphicView cachedSelectionRange].location;
+    if (location > 0) {
+        GSLayer *leftLayer  = [graphicView cachedGlyphAtIndex:location - 1];
+        GSLayer *rightLayer = [graphicView cachedGlyphAtIndex:location + 0];
+        if (leftLayer && rightLayer) {
+            NSString *leftGroup  = [[leftLayer  glyph] rightKerningGroupId];
+            NSString *rightGroup = [[rightLayer glyph] leftKerningGroupId];
+            //
+            KCWindowController *windowController = [[KCWindowController alloc] init];
+            [windowController setDelegate:self];
+            [[windowController window] orderFrontRegardless];
+            [[windowController window] makeKeyWindow];
+            [windowController showWindow:nil];
+            NSUInteger index = NSMutableIndexSetConsumeNewIndex(_mutableWindowIndexes);
+            [_windowControllers insertObject:windowController atIndex:index];
+            {
+                NSString *name = [NSString stringWithFormat:@"KerningClassesPluginWindow%lu", index + 1];
+                [[windowController window] setFrameUsingName:name];
+                [[windowController window] setTitle:[NSString stringWithFormat:@"Kerning Window: #%lu", index + 1]];
+                [windowController revealEntryIfAvailable:[[KCKerningEntry alloc] initWithLeft:leftGroup right:rightGroup]];
+            }
+        }
+    }
 }
 
 - (void)windowControllerWillClose:(KCWindowController *)windowController {
     NSUInteger index = [_windowControllers indexOfObject:windowController];
-    [_windowControllers removeObject:windowController];
     if (index != NSNotFound) {
-        NSMenuItem *menuItem = [_menuItems objectAtIndex:index];
-        [menuItem setState:NSOffState];
+        NSString *name = [NSString stringWithFormat:@"KerningClassesPluginWindow%lu", index + 1];
+        [[windowController window] saveFrameUsingName:name];
+    }
+    [_windowControllers removeObject:windowController];
+    [_mutableWindowIndexes removeIndex:index];
+}
+
+- (void)windowControllerDidMove:(KCWindowController *)windowController {
+    NSUInteger index = [_windowControllers indexOfObject:windowController];
+    if (index != NSNotFound) {
+        NSString *name = [NSString stringWithFormat:@"KerningClassesPluginWindow%lu", index + 1];
+        [[windowController window] saveFrameUsingName:name];
     }
 }
 
-- (void)reloadData {
-    GSDocument *document = (GSDocument *)[[NSDocumentController sharedDocumentController] currentDocument];
-    if (![document isEqual:_document]) {
-        [[_document font] removeObserver:self forKeyPath:@"kerning" context:NULL];
-        [[document  font] addObserver:self forKeyPath:@"kerning" options:0 context:NULL];
-        [[_document windowController] removeObserver:self forKeyPath:@"masterIndex" context:NULL];
-        [[document windowController] addObserver:self forKeyPath:@"masterIndex" options:0 context:NULL];
-        _document = document;
-        for (KCWindowController *windowController in _windowControllers) {
-            [windowController reloadData];
-        }
+- (void)windowControllerDidResize:(KCWindowController *)windowController {
+    NSUInteger index = [_windowControllers indexOfObject:windowController];
+    if (index != NSNotFound) {
+        NSString *name = [NSString stringWithFormat:@"KerningClassesPluginWindow%lu", index + 1];
+        [[windowController window] saveFrameUsingName:name];
     }
-}
-
-- (void)handleWindowDidBecomeKeyNotification:(NSNotification *)notification {
-    NSLog(@"%@", notification);
-    if ([[notification object] isKindOfClass:NSClassFromString(@"GSWindow")]) {
-        [self reloadData];
-    }
-}
-
-- (void)handleWindowDidResignKeyNotification:(NSNotification *)notification {
-    NSLog(@"%@", notification);
-    if ([[notification object] isKindOfClass:NSClassFromString(@"GSWindow")]) {
-        [self reloadData];
-    }
-}
-
-- (void)handleWindowWillCloseNotification:(NSNotification *)notification {
-    NSLog(@"%@", notification);
-    if ([[notification object] isKindOfClass:NSClassFromString(@"GSWindow")]) {
-        [self reloadData];
-    }
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"kerning"] || [keyPath isEqualToString:@"masterIndex"]) {
-        for (KCWindowController *windowController in _windowControllers) {
-            [windowController reloadData];
-        }
-    }
-}
-
-- (GSDocument *)documentForWindowController:(KCWindowController *)windowController {
-    return _document;
 }
 
 @end

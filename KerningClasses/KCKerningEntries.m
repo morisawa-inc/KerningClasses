@@ -8,9 +8,13 @@
 
 #import "KCKerningEntries.h"
 #import "KCKerningPair.h"
+#import "KCKerningGroups.h"
+
+#import <GlyphsCore/GSLayer.h>
 
 typedef NS_ENUM(NSUInteger, KCKerningValueFilterStrategy) {
-    KCKerningValueFilterStrategyName,
+    KCKerningValueFilterStrategyNameDefault,
+    KCKerningValueFilterStrategyNameRegularExpression,
     KCKerningValueFilterStrategyValue
 };
 
@@ -27,7 +31,7 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
 
 @property (nonatomic, readonly) NSString *queryString;
 
-- (instancetype)initWithQueryString:(NSString *)aQueryString;
+- (instancetype)initWithQueryString:(NSString *)aQueryString queryType:(KCKerningEntriesQueryType)aQueryType;
 - (BOOL)evaluate:(KCKerningPair *)aPair;
 
 @end
@@ -40,7 +44,7 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
 
 @implementation KCKerningEntryFilter
 
-- (instancetype)initWithQueryString:(NSString *)aQueryString {
+- (instancetype)initWithQueryString:(NSString *)aQueryString queryType:(KCKerningEntriesQueryType)aQueryType {
     if ((self = [self init])) {
         _queryString = aQueryString;
         NSRegularExpression *expression = [[NSRegularExpression alloc] initWithPattern:@"^\\s*(>=*|<=*|=+)\\s*([\\-+0-9]+)\\s*$" options:0 error:nil];
@@ -60,15 +64,27 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
             }
             _thresholdValue = [[aQueryString substringWithRange:[match rangeAtIndex:2]] integerValue];
         }
-        _strategy = (_valueComparator == KCKerningValueFilterValueComparatorUndefined) ? KCKerningValueFilterStrategyName : KCKerningValueFilterStrategyValue;
+        _strategy = (_valueComparator == KCKerningValueFilterValueComparatorUndefined) ? KCKerningValueFilterStrategyNameDefault : KCKerningValueFilterStrategyValue;
+        if (aQueryType == KCKerningEntriesQueryTypeRegularExpression && _strategy == KCKerningValueFilterStrategyNameDefault) {
+            _strategy = KCKerningValueFilterStrategyNameRegularExpression;
+        }
     }
     return self;
 }
 
 - (BOOL)evaluate:(KCKerningPair *)aPair {
     BOOL result = NO;
-    if (_strategy == KCKerningValueFilterStrategyName) {
+    if (_strategy == KCKerningValueFilterStrategyNameDefault) {
         if ([[aPair left] containsString:_queryString] || [[aPair right] containsString:_queryString]) {
+            result = YES;
+        }
+    } else if (_strategy == KCKerningValueFilterStrategyNameRegularExpression) {
+        NSString *queryString = _queryString;
+        if (![queryString hasPrefix:@"^"]) queryString = [@"^" stringByAppendingString:queryString];
+        if (![queryString hasSuffix:@"$"]) queryString = [queryString stringByAppendingString:@"$"];
+        NSRegularExpression *pattern = [[NSRegularExpression alloc] initWithPattern:queryString options:0 error:nil];
+        if ([pattern rangeOfFirstMatchInString:[aPair left]  options:0 range:NSMakeRange(0, [[aPair left]  length])].location != NSNotFound ||
+            [pattern rangeOfFirstMatchInString:[aPair right] options:0 range:NSMakeRange(0, [[aPair right] length])].location != NSNotFound) {
             result = YES;
         }
     } else if (_strategy == KCKerningValueFilterStrategyValue) {
@@ -102,37 +118,33 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
 @property (nonatomic, readonly) NSDictionary *glyphObjectsFromClassNameDictionary;
 @property (nonatomic, readonly) NSDictionary *glyphNamesFromClassNameDictionary;
 @property (nonatomic, readonly) KCKerningEntryFilter *filter;
+@property (nonatomic, readonly) KCKerningGroups *kerningGroups;
 @end
 
 @implementation KCKerningEntries
 
-- (instancetype)initWithFontMaster:(GSFontMaster *)aFontMaster queryString:(NSString *)aQueryString {
+- (instancetype)initWithFontMaster:(GSFontMaster *)aFontMaster queryString:(NSString *)aQueryString type:(KCKerningEntriesQueryType)aQueryType {
     if ((self = [self init])) {
+        
         _fontMaster = aFontMaster;
         _queryString = aQueryString;
-        _glyphObjectsFromClassNameDictionary = [self glyphObjectsFromClassNameDictionaryWithFont:[aFontMaster font]];
-        _glyphNamesFromClassNameDictionary   = [self glyphNamesFromClassNameDictionaryByNameWithFont:[aFontMaster font]];
-        _filter = ([aQueryString length] > 0) ? [[KCKerningEntryFilter alloc] initWithQueryString:aQueryString] : nil;
+        _queryType = aQueryType;
+        _kerningGroups = [[KCKerningGroups alloc] initWithFontMaster:aFontMaster];
+        _filter = ([aQueryString length] > 0) ? [[KCKerningEntryFilter alloc] initWithQueryString:aQueryString queryType:aQueryType] : nil;
     }
     return self;
 }
 
 - (instancetype)initWithFontMaster:(GSFontMaster *)aFontMaster {
-    if ((self = [self initWithFontMaster:aFontMaster queryString:nil])) {
+    if ((self = [self initWithFontMaster:aFontMaster queryString:nil type:KCKerningEntriesQueryTypeDefault])) {
         
     }
     return self;
 }
 
 - (BOOL)containsGlyphName:(NSString *)aGlyphName withinClassName:(NSString *)aClassName {
-    BOOL contains = NO;
-    if (aGlyphName && aClassName) {
-        contains = [[_glyphNamesFromClassNameDictionary objectForKey:aClassName] containsObject:aGlyphName] ? YES : NO;
-    }
-    return contains;
+    return [_kerningGroups containsGlyphName:aGlyphName withinGroup:aClassName];
 }
-
-
 
 - (NSArray<KCKerningEntry *> *)entries {
     //
@@ -158,8 +170,16 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
         if ([kerningPair isLeftGrouped] || [kerningPair isRightGrouped]) {
             for (KCKerningPair *anotherPair in mutableKerningPairs) {
                 if ([kerningPair isEqual:anotherPair]) continue;
-                if ([kerningPair isLeftGrouped] && ![anotherPair isLeftGrouped] && [self containsGlyphName:[anotherPair left] withinClassName:[kerningPair left]]) {
-                    if (([kerningPair isRightGrouped] && [self containsGlyphName:[anotherPair right] withinClassName:[kerningPair right]]) || [[kerningPair right] isEqualToString:[anotherPair right]]) {
+                BOOL isLeftGlyphContainedInGroup  = NO;
+                BOOL isRightGlyphContainedInGroup = NO;
+                if ([kerningPair isLeftGrouped] && ![anotherPair isLeftGrouped]) {
+                    isLeftGlyphContainedInGroup = [_kerningGroups containsGlyphName:[anotherPair left] withinGroup:[kerningPair left]];
+                }
+                if ([kerningPair isRightGrouped] && ![anotherPair isRightGrouped]) {
+                    isRightGlyphContainedInGroup = [_kerningGroups containsGlyphName:[anotherPair right] withinGroup:[kerningPair right]];
+                }
+                if (isLeftGlyphContainedInGroup) {
+                    if (isRightGlyphContainedInGroup || [[kerningPair right] isEqualToString:[anotherPair right]]) {
                         NSMutableOrderedSet *mutableExceptionPairs = [mutableExceptionDictionary objectForKey:kerningPair];
                         if (!mutableExceptionPairs) {
                             mutableExceptionPairs = [[NSMutableOrderedSet alloc] initWithCapacity:0];
@@ -169,8 +189,8 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
                         [mutableAggregatedExceptionPairs addObject:anotherPair];
                     }
                 }
-                if ([kerningPair isRightGrouped] && ![anotherPair isRightGrouped] && [self containsGlyphName:[anotherPair right] withinClassName:[kerningPair right]]) {
-                    if (([kerningPair isLeftGrouped] && [self containsGlyphName:[anotherPair left] withinClassName:[kerningPair left]]) || [[kerningPair left] isEqualToString:[anotherPair left]]) {
+                if (isRightGlyphContainedInGroup) {
+                    if (isLeftGlyphContainedInGroup || [[kerningPair left] isEqualToString:[anotherPair left]]) {
                         NSMutableOrderedSet *mutableExceptionPairs = [mutableExceptionDictionary objectForKey:kerningPair];
                         if (!mutableExceptionPairs) {
                             mutableExceptionPairs = [[NSMutableOrderedSet alloc] initWithCapacity:0];
@@ -187,43 +207,57 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
     NSMutableArray *mutableEntries = [[NSMutableArray alloc] initWithCapacity:0];
     for (KCKerningPair *kerningPair in mutableKerningPairs) {
         if ([mutableAggregatedExceptionPairs containsObject:kerningPair]) continue;
+        //
+        BOOL orphanedException = NO;
+        if (!([kerningPair isLeftGrouped] && [kerningPair isRightGrouped])) {
+            GSGlyph *leftGlyph  = [[self glyphsForIdentifier:[kerningPair left]]  firstObject];
+            GSGlyph *rightGlyph = [[self glyphsForIdentifier:[kerningPair right]] firstObject];
+            if (leftGlyph && rightGlyph) {
+                GSLayer *leftLayer  = [[leftGlyph  layers] objectForKey:[_fontMaster id]];
+                GSLayer *rightLayer = [[rightGlyph layers] objectForKey:[_fontMaster id]];
+                if (leftLayer && rightLayer) {
+                    if ([leftLayer rightKerningExeptionForLayer:rightLayer]) {
+                        NSString *leftKey = [leftGlyph rightKerningGroup];
+                        if (leftKey) {
+                            leftKey = [NSString stringWithFormat:@"@MMK_L_%@", leftKey];
+                        } else {
+                            leftKey = [leftGlyph id];
+                        }
+                        NSString *rightKey = [rightGlyph leftKerningGroup];
+                        if (rightKey) {
+                            rightKey = [NSString stringWithFormat:@"@MMK_R_%@", rightKey];
+                        } else {
+                            rightKey = [rightGlyph id];
+                        }
+                        if (![[dictionary objectForKey:leftKey] objectForKey:rightKey]) {
+                            orphanedException = YES;
+                        }
+                    }
+                }
+            }
+        }
+        //
         NSArray *exceptions = nil;
         NSOrderedSet *exceptionPairs = [mutableExceptionDictionary objectForKey:kerningPair];
         if ([exceptionPairs count] > 0) {
             NSMutableArray *mutableExceptions = [[NSMutableArray alloc] initWithCapacity:0];
             for (KCKerningPair *exceptionPair in exceptionPairs) {
-                [mutableExceptions addObject:[[KCKerningEntry alloc] initWithLeft:[exceptionPair left] right:[exceptionPair right] value:[exceptionPair value] exceptions:nil]];
+                [mutableExceptions addObject:[[KCKerningEntry alloc] initWithLeft:[exceptionPair left] right:[exceptionPair right] value:[exceptionPair value] exceptions:nil orphanedException:orphanedException]];
             }
             exceptions = [mutableExceptions copy];
         }
-        KCKerningEntry *entry = [[KCKerningEntry alloc] initWithLeft:[kerningPair left] right:[kerningPair right] value:[kerningPair value] exceptions:exceptions];
+        KCKerningEntry *entry = [[KCKerningEntry alloc] initWithLeft:[kerningPair left] right:[kerningPair right] value:[kerningPair value] exceptions:exceptions orphanedException:orphanedException];
         [mutableEntries addObject:entry];
     }
     return [mutableEntries copy];
 }
 
 - (NSArray<GSGlyph *> *)glyphsForIdentifier:(NSString *)anIdentifier {
-    NSArray *glyphs = nil;
-    if (anIdentifier) {
-        glyphs = [[_glyphObjectsFromClassNameDictionary objectForKey:anIdentifier] array];
-        if (!glyphs) {
-            GSFont *font = [_fontMaster font];
-            GSGlyph *glyph = [font glyphForId:anIdentifier];
-            if (glyph) {
-                glyphs = [NSArray arrayWithObject:glyph];
-            } else {
-                glyph = [font glyphForName:anIdentifier];
-                if (glyph) {
-                    glyphs = [NSArray arrayWithObject:glyph];
-                }
-            }
-        }
-    }
-    return glyphs;
+    return [[_kerningGroups glyphsForIdentifier:anIdentifier] array];
 }
 
-- (KCKerningEntries *)filteredEntriesWithQueryString:(NSString *)aQueryString {
-    return [[[self class] alloc] initWithFontMaster:_fontMaster queryString:aQueryString];
+- (KCKerningEntries *)filteredEntriesWithQueryString:(NSString *)aQueryString type:(KCKerningEntriesQueryType)aType {
+    return [[[self class] alloc] initWithFontMaster:_fontMaster queryString:aQueryString type:aType];
 }
 
 #pragma mark -
@@ -231,54 +265,5 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
 - (instancetype)copyWithZone:(NSZone *)zone {
     return self;
 }
-
-#pragma mark -
-
-- (NSDictionary<NSString *, GSGlyph *> *)glyphObjectsFromClassNameDictionaryWithFont:(GSFont *)aFont {
-    NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-    for (GSGlyph *glyph in [aFont glyphs]) {
-        if ([[glyph leftKerningGroupId] length] > 0) {
-            NSMutableOrderedSet *mutableGlyphs = [mutableDictionary objectForKey:[glyph leftKerningGroupId]];
-            if (!mutableGlyphs) {
-                mutableGlyphs = [[NSMutableOrderedSet alloc] initWithCapacity:0];
-                [mutableDictionary setObject:mutableGlyphs forKey:[glyph leftKerningGroupId]];
-            }
-            [mutableGlyphs addObject:glyph];
-        }
-        if ([[glyph rightKerningGroupId] length] > 0) {
-            NSMutableOrderedSet *mutableGlyphs = [mutableDictionary objectForKey:[glyph rightKerningGroupId]];
-            if (!mutableGlyphs) {
-                mutableGlyphs = [[NSMutableOrderedSet alloc] initWithCapacity:0];
-                [mutableDictionary setObject:mutableGlyphs forKey:[glyph rightKerningGroupId]];
-            }
-            [mutableGlyphs addObject:glyph];
-        }
-    }
-    return (NSDictionary *)mutableDictionary;
-}
-
-- (NSDictionary<NSString *, NSString *> *)glyphNamesFromClassNameDictionaryByNameWithFont:(GSFont *)aFont {
-    NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-    for (GSGlyph *glyph in [aFont glyphs]) {
-        if ([[glyph leftKerningGroupId] length] > 0) {
-            NSMutableOrderedSet *mutableGlyphs = [mutableDictionary objectForKey:[glyph leftKerningGroupId]];
-            if (!mutableGlyphs) {
-                mutableGlyphs = [[NSMutableOrderedSet alloc] initWithCapacity:0];
-                [mutableDictionary setObject:mutableGlyphs forKey:[glyph leftKerningGroupId]];
-            }
-            [mutableGlyphs addObject:[glyph name]];
-        }
-        if ([[glyph rightKerningGroupId] length] > 0) {
-            NSMutableOrderedSet *mutableGlyphs = [mutableDictionary objectForKey:[glyph rightKerningGroupId]];
-            if (!mutableGlyphs) {
-                mutableGlyphs = [[NSMutableOrderedSet alloc] initWithCapacity:0];
-                [mutableDictionary setObject:mutableGlyphs forKey:[glyph rightKerningGroupId]];
-            }
-            [mutableGlyphs addObject:[glyph name]];
-        }
-    }
-    return (NSDictionary *)mutableDictionary;
-}
-
 
 @end
