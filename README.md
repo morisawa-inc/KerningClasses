@@ -1,8 +1,8 @@
 # KerningClasses.glyphsPlugin
 
-A Glyphs.app plugin to examine kerning values in a plain old interface.
+A Glyphs plugin to examine kerning values with a plain old interface.
 
-![](screenshot.png)
+![](KerningClasses.png)
 
 ## Installation
 
@@ -12,19 +12,27 @@ A Glyphs.app plugin to examine kerning values in a plain old interface.
 
 ## Usage
 
-1. Select [Window] - [Kerning Classes] from the menu.
-2. In the dialog, the kerning pairs are enumerated as a list.
-3. Exceptions will be automatically grouped and listed as subitems. Click the disclosure triangles to expand.
-4. Use the search field to find the glyphs in interest. By default, it lists the pairs that matches with the text you have entered. To filter them out by kerning values, the following comparators can be used: `=`, `<`, `>`, `<=` and `>=`. For instance, enter `<= 100` to list the pairs that have been tracked more than `-100`.
-5. The right pane is where you can see the possible list of glyphs for the selected kerning pairs. If you select one or more of these, the text that covers all the kerning combinations will be set in the current Font tab.
+**Open a new window:** Choose File > New Kerning Window.
 
-## Tips
+**Switch to the other masters:** Click the jump bar below the search field and choose a master from the pop-up menu.
 
-- The following comparators can be used to filter by value: `=`, `<`, `>`, `<=` and `>=`. (e.g. `<= 100` to list the pairs tracked more than `-100`)
+**Examine kerning exceptions:** Click the disclosure triangles to expand. Exceptions will be automatically grouped and listed as subitems. Note that orphaned exceptions – whose kerning groups leave their kerning values undefined – are marked in red, and class-to-class kerning pairs are displayed with grey.
+
+**Customise colours in the list:** Edit the file `Colors.json` to configure the text colour for each type of pairs. The file is located at the following path: `KerningClasses.glyphsPlugin/Contents/Resources/Colors.json`.
+
+**Filter values in the list:** Enter text into the search field to find the glyphs in interest. To filter out the list by kerning values, the following comparators can be used: `=`, `<`, `>`, `<=` and `>=`. For instance, enter `<= -100` to list the pairs that have been tracked more than `-100`.
+
+![](KerningClassesFilter.png)
+
+**Make combinations:** Select one or more pairs in the list. Double-click or press `Shift` + `Enter` to display the text that covers all the combinations for the selected pairs in the current tab.
+
+**See what’s included in the pairs:** Select one or more pairs in the list. The aggregated list of glyphs for the selected pairs is shown in the right column. If you select one or more of glyphs, their combinations will be automatically set in the current tab.
+
+**Copy metrics:** Select one or more pairs in the list. To copy the metrics values, right-click the selected items and choose Copy Metrics from the contextual menu. The values are copied as semicolon separated values, or you can directly paste them into the Kerning window which is shipped with Glyphs.
 
 ## Requirements
 
-Tested with Glyphs 2.4 on OS X 10.11. Might just work with later versions, or older versions if you have a luck.
+Tested with Glyphs 2.3 on OS X 10.11.
 
 ## License
 
