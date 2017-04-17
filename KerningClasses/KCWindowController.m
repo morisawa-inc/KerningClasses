@@ -18,6 +18,11 @@
 #import <GlyphsCore/GSGlyphViewControllerProtocol.h>
 #import <GlyphsCore/MGOrderedDictionary.h>
 
+typedef NS_ENUM(NSInteger, KCWindowControllerDisplayStringVerbosity) {
+    KCWindowControllerDisplayStringVerbosityDefault,
+    KCWindowControllerDisplayStringVerbosityAbridged
+};
+
 @protocol KCWindowControllerProtocol <GSWindowControllerProtocol>
 @property(nonatomic) NSUInteger masterIndex;
 @end
@@ -184,13 +189,17 @@
     [self showAlertAndDisplayString:displayString];
 }
 
-- (NSString *)combintionDisplayStringFromEntries:(NSArray<KCKerningEntry *> *)entries {
+- (NSString *)combintionDisplayStringFromEntries:(NSArray<KCKerningEntry *> *)entries verbosity:(KCWindowControllerDisplayStringVerbosity)aVerbosity {
     NSString *displayString = nil;
     NSMutableArray *mutableTextLines = [[NSMutableArray alloc] initWithCapacity:0];
     for (KCKerningEntry *entry in entries) {
         NSMutableString *mutableDisplayString = [[NSMutableString alloc] initWithCapacity:0];
         NSArray<GSGlyph *> *leftGlyphs  = [_entries glyphsForIdentifier:[entry left]];
         NSArray<GSGlyph *> *rightGlyphs = [_entries glyphsForIdentifier:[entry right]];
+        if (aVerbosity == KCWindowControllerDisplayStringVerbosityAbridged) {
+            leftGlyphs  = [leftGlyphs  subarrayWithRange:NSMakeRange(0, 1)];
+            rightGlyphs = [rightGlyphs subarrayWithRange:NSMakeRange(0, 1)];
+        }
         for (GSGlyph *leftGlyph in leftGlyphs) {
             for (GSGlyph *rightGlyph in rightGlyphs) {
                 [mutableDisplayString appendFormat:@"/%@ /%@", [leftGlyph name], [rightGlyph name]];
@@ -198,7 +207,11 @@
         }
         [mutableTextLines addObject:[mutableDisplayString copy]];
     }
-    displayString = [mutableTextLines componentsJoinedByString:@"\n"];
+    NSString *delimiter = @"\n";
+    if (aVerbosity == KCWindowControllerDisplayStringVerbosityAbridged) {
+        delimiter = @"  ";
+    }
+    displayString = [mutableTextLines componentsJoinedByString:delimiter];
     return displayString;
 }
 
@@ -249,7 +262,12 @@
 }
 
 - (void)kerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler shouldDisplayTextInTabForEntries:(NSArray<KCKerningEntry *> *)entries {
-    NSString *displayString = [self combintionDisplayStringFromEntries:entries];
+    NSString *displayString = nil;
+    if ([[[NSApplication sharedApplication] currentEvent] modifierFlags] & NSShiftKeyMask) {
+        displayString = [self combintionDisplayStringFromEntries:entries verbosity:KCWindowControllerDisplayStringVerbosityDefault];
+    } else {
+        displayString = [self combintionDisplayStringFromEntries:entries verbosity:KCWindowControllerDisplayStringVerbosityAbridged];
+    }
     [self showAlertAndDisplayString:displayString];
 }
 
@@ -417,7 +435,7 @@
         [mutableSelectedItems addObject:[_kerningOutlineView itemAtRow:idx]];
     }];
     
-    NSString *displayString = [self combintionDisplayStringFromEntries:mutableSelectedItems];
+    NSString *displayString = [self combintionDisplayStringFromEntries:mutableSelectedItems verbosity:KCWindowControllerDisplayStringVerbosityAbridged];
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] writeObjects:[NSArray arrayWithObject:displayString]];
 }

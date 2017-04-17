@@ -42,7 +42,7 @@
 }
 
 - (void)keyDown:(NSEvent *)event {
-    if (([event keyCode] == 36 || [event keyCode] == 76) && [event modifierFlags] & NSShiftKeyMask) {
+    if (([event keyCode] == 36 || [event keyCode] == 76)) {
         NSIndexSet *selection = [self selectedRowIndexes];
         if ([selection count] > 0) {
             if ([(id)_delegate respondsToSelector:@selector(outlineView:didPressTriggerKeyWithItems:)]) {
