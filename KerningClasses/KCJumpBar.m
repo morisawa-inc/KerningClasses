@@ -17,7 +17,7 @@
 
 @interface KCJumpBar () <RSJumpBarDelegate, RSJumpBarDataSource> {
 @private
-    id _delegate;
+    __weak id _delegate;
 }
 @end
 
