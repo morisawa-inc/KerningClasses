@@ -42,6 +42,10 @@ static NSUInteger NSMutableIndexSetConsumeNewIndex(NSMutableIndexSet *set) {
 @property(nonatomic, readonly) NSMutableIndexSet *mutableWindowIndexes;
 @end
 
+@protocol GSGlyphEditViewCompatibilityProtocol <GSGlyphEditViewProtocol>
+@property (nonatomic, readonly) NSRange cachedSelectionRange;
+@end
+
 @interface GSDocument : NSDocument
 @property(readonly, nonatomic) NSWindowController *windowController;
 @property(readonly, nonatomic) GSFontMaster *selectedFontMaster;
@@ -127,8 +131,13 @@ static NSUInteger NSMutableIndexSetConsumeNewIndex(NSMutableIndexSet *set) {
 - (void)handleRevealInKerningWindow:(id)sender {
     GSDocument *currentDocument = [[NSDocumentController sharedDocumentController] currentDocument];
     NSViewController<GSGlyphEditViewControllerProtocol> *editViewController = [(NSViewController<GSWindowControllerProtocol> *)[currentDocument windowController] activeEditViewController];
-    NSView <GSGlyphEditViewProtocol, NSTextInputClient> *graphicView = [editViewController graphicView];
-    NSUInteger location = [graphicView cachedSelectionRange].location;
+    NSView <GSGlyphEditViewCompatibilityProtocol, NSTextInputClient> *graphicView = (NSView <GSGlyphEditViewCompatibilityProtocol, NSTextInputClient> *)[editViewController graphicView];
+    NSUInteger location = 0;
+    if ([graphicView respondsToSelector:@selector(cachedLayerSelectionRange)]) {
+        location = ((NSRange)[(id)graphicView cachedLayerSelectionRange]).location;
+    } else {
+        location = ((NSRange)[(id)graphicView cachedSelectionRange]).location;
+    }
     if (location > 0) {
         GSLayer *leftLayer  = [graphicView cachedGlyphAtIndex:location - 1];
         GSLayer *rightLayer = [graphicView cachedGlyphAtIndex:location + 0];
