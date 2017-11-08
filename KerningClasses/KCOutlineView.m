@@ -35,8 +35,9 @@
 }
 
 - (void)reloadData {
-    if ([_dataSource respondsToSelector:@selector(reloadData)]) {
-        [_dataSource reloadData];
+    id dataSource = [self dataSource];
+    if ([dataSource respondsToSelector:@selector(reloadData)]) {
+        [dataSource reloadData];
     }
     [super reloadData];
 }
