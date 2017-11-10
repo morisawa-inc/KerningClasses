@@ -33,6 +33,10 @@ typedef NS_ENUM(NSInteger, KCWindowControllerDisplayStringVerbosity) {
 @property(retain, nonatomic) GSFont *font;
 @end
 
+@protocol KCGlyphEditViewProtocol <GSGlyphEditViewProtocol>
+@property(nonatomic) NSRange selectedRange;
+@end
+
 @interface GSTextStorage : NSObject
 @property(nonatomic) NSRange selectedRange;
 @end
@@ -310,8 +314,17 @@ typedef NS_ENUM(NSInteger, KCWindowControllerDisplayStringVerbosity) {
     return [[[[[self currentDocument] windowController] activeEditViewController] graphicView] displayString];
 }
 
+- (NSRange)selectedRange {
+    NSView<KCGlyphEditViewProtocol, NSTextInputClient> *graphicView = (NSView<KCGlyphEditViewProtocol, NSTextInputClient> *)[[[[self currentDocument] windowController] activeEditViewController] graphicView];
+    GSTextStorage *textStorage = [graphicView textStorage];
+    if ([textStorage respondsToSelector:@selector(selectedRange)]) {
+        return [textStorage selectedRange];
+    }
+    return [graphicView selectedRange];
+}
+
 - (void)setDisplayString:(NSString *)aDisplayString {
-    NSRange range = [[[[[[self currentDocument] windowController] activeEditViewController] graphicView] textStorage] selectedRange];
+    NSRange range = [self selectedRange];
     NSString *currentDisplayString = [self displayString];
     if (range.length == 0) {
         range = [currentDisplayString lineRangeForRange:range];
