@@ -16,7 +16,8 @@
 @implementation KCFontMasterStore
 
 + (instancetype)currentFontMasterStore {
-    GSFont *font = [[[[NSDocumentController sharedDocumentController] documents] lastObject] font];
+    GSFont *font = [[[NSDocumentController sharedDocumentController] currentDocument] font];
+    if (!font) font = [[[[NSDocumentController sharedDocumentController] documents] lastObject] font];
     GSFontMaster *fontMaster = [[font parent] selectedFontMaster];
     return [[self alloc] initWithFontMaster:fontMaster font:font];
 }
