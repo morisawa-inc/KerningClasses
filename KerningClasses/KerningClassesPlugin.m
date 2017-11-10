@@ -44,6 +44,7 @@ static NSUInteger NSMutableIndexSetConsumeNewIndex(NSMutableIndexSet *set) {
 
 @protocol GSGlyphEditViewCompatibilityProtocol <GSGlyphEditViewProtocol>
 @property (nonatomic, readonly) NSRange cachedSelectionRange;
+@property (nonatomic, readonly) NSRange cachedLayerSelectionRange;
 @end
 
 @interface GSDocument : NSDocument
