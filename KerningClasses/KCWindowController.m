@@ -58,6 +58,7 @@ typedef NS_ENUM(NSInteger, KCWindowControllerDisplayStringVerbosity) {
 @property (nonatomic) NSArray<GSGlyph *> *leftGlyphs;
 @property (nonatomic) NSArray<GSGlyph *> *rightGlyphs;
 @property (nonatomic, readonly) KCKerningEntriesQueryType queryType;
+@property (nonatomic) BOOL shouldDisableUpdatingDisplayText;
 @end
 
 @implementation KCWindowController
@@ -136,7 +137,9 @@ typedef NS_ENUM(NSInteger, KCWindowControllerDisplayStringVerbosity) {
         NSInteger row = [_kerningOutlineView rowForItem:selectedItem];
         if (row >= 0) [mutableRowIndexes addIndex:row];
     }
+    _shouldDisableUpdatingDisplayText = YES;
     [_kerningOutlineView selectRowIndexes:mutableRowIndexes byExtendingSelection:NO];
+    _shouldDisableUpdatingDisplayText = NO;
     //
     for (id item in [_kerningOutlineViewHandler expandedItems]) {
         [_kerningOutlineView expandItem:item expandChildren:YES];
@@ -176,6 +179,7 @@ typedef NS_ENUM(NSInteger, KCWindowControllerDisplayStringVerbosity) {
 }
 
 - (void)kerningOutlineViewHandler:(KCKerningOutlineViewHandler *)handler didSelectRowWithLeftIdentifiers:(NSArray<NSString *> *)leftIdentifiers rightIdentifiers:(NSArray<NSString *> *)rightIdentifiers {
+    if (_shouldDisableUpdatingDisplayText) return;
     NSMutableOrderedSet *mutableLeftGlyphs  = [[NSMutableOrderedSet alloc] initWithCapacity:0];
     NSMutableOrderedSet *mutableRightGlyphs = [[NSMutableOrderedSet alloc] initWithCapacity:0];
     for (NSString *left in leftIdentifiers) {
