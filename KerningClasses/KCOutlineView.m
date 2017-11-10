@@ -46,7 +46,7 @@
     if (([event keyCode] == 36 || [event keyCode] == 76)) {
         NSIndexSet *selection = [self selectedRowIndexes];
         if ([selection count] > 0) {
-            if ([(id)_delegate respondsToSelector:@selector(outlineView:didPressTriggerKeyWithItems:)]) {
+            if ([(id)[self delegate] respondsToSelector:@selector(outlineView:didPressTriggerKeyWithItems:)]) {
                 NSMutableArray *mutableItems = [[NSMutableArray alloc] init];
                 [selection enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * stop) {
                     id item = [self itemAtRow:idx];
@@ -54,7 +54,7 @@
                         [mutableItems addObject:item];
                     }
                 }];
-                [(id)_delegate outlineView:self didPressTriggerKeyWithItems:[mutableItems copy]];
+                [(id)[self delegate] outlineView:self didPressTriggerKeyWithItems:[mutableItems copy]];
                 return;
             }
         }
@@ -65,7 +65,7 @@
 - (void)handleDoubleAction:(id)sender {
     NSIndexSet *selection = [self selectedRowIndexes];
     if ([selection count] > 0) {
-        if ([(id)_delegate respondsToSelector:@selector(outlineView:didDoubleClickWithItems:)]) {
+        if ([(id)[self delegate] respondsToSelector:@selector(outlineView:didDoubleClickWithItems:)]) {
             NSMutableArray *mutableItems = [[NSMutableArray alloc] init];
             [selection enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * stop) {
                 id item = [self itemAtRow:idx];
@@ -73,7 +73,7 @@
                     [mutableItems addObject:item];
                 }
             }];
-            [(id)_delegate outlineView:self didDoubleClickWithItems:[mutableItems copy]];
+            [(id)[self delegate] outlineView:self didDoubleClickWithItems:[mutableItems copy]];
             return;
         }
     }
