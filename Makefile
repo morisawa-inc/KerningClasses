@@ -1,6 +1,8 @@
 .PHONY: plugin
 plugin:
 	xcodebuild
+	command -v postbuild-codesign >/dev/null 2>&1 && postbuild-codesign
+	command -v postbuild-notarize >/dev/null 2>&1 && postbuild-notarize
 	cp -r build/Release/*.glyphsPlugin .
 
 .PHONY: clean
