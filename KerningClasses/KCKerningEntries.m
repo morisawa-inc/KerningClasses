@@ -10,7 +10,10 @@
 #import "KCKerningPair.h"
 #import "KCKerningGroups.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 #import <GlyphsCore/GSLayer.h>
+#pragma clang diagnostic pop
 
 typedef NS_ENUM(NSUInteger, KCKerningValueFilterStrategy) {
     KCKerningValueFilterStrategyNameDefault,

@@ -16,7 +16,10 @@
 #import <GlyphsCore/GSGlyphEditViewProtocol.h>
 #import <GlyphsCore/GSGlyphViewControllerProtocol.h>
 #import <GlyphsCore/GSGlyph.h>
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
 #import <GlyphsCore/GSLayer.h>
+#pragma clang diagnostic pop
 
 static NSUInteger NSMutableIndexSetConsumeNewIndex(NSMutableIndexSet *set) {
     __block NSUInteger index = NSNotFound;
