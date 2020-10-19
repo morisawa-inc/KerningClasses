@@ -30,6 +30,11 @@ A Glyphs plugin to examine kerning values with a plain old interface.
 
 **Copy metrics:** Select one or more pairs in the list. To copy the metrics values, right-click the selected items and choose Copy Metrics from the contextual menu. The values are copied as semicolon separated values, or you can directly paste them into the Kerning window which is shipped with Glyphs.
 
+
+## Limitation
+
+- The plugin cannot handle 3-level deep kerning exceptions at the moment. The codebase needs some overhaul to fix that.
+
 ## Requirements
 
 Tested with Glyphs 2.3 on OS X 10.11.
