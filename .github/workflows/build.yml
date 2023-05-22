@@ -1,0 +1,100 @@
+name: Build
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Setup API key for notarization
+        env:
+          FASTLANE_JSON_BASE64: ${{ secrets.ORG_MACOS_FASTLANE_JSON_BASE64 }}
+        run: |
+          # Decode Fastlane JSON and save it as a file.
+          FASTLANE_JSON_PATH=$RUNNER_TEMP/key.json
+          echo -n "$FASTLANE_JSON_BASE64" | base64 --decode -o $FASTLANE_JSON_PATH
+          # Extract API key and export it as an environment variable.
+          AC_API_KEY="$(jq -r .key_id $FASTLANE_JSON_PATH)"
+          AC_API_ISSUER="$(jq -r .issuer_id $FASTLANE_JSON_PATH)"
+          echo "AC_API_KEY=$AC_API_KEY" >> "$GITHUB_ENV"
+          echo "AC_API_ISSUER=$AC_API_ISSUER" >> "$GITHUB_ENV"
+          # Write a private key file inside ~/.private_keys.
+          mkdir -p "$HOME/.private_keys"
+          jq -r .key "$FASTLANE_JSON_PATH" > "$HOME/.private_keys/AuthKey_$AC_API_KEY.p8"
+      - name: Install certificate for codesign
+        env:
+          BUILD_CERTIFICATE_BASE64:   ${{ secrets.ORG_MACOS_BUILD_CERTIFICATE_BASE64 }}
+          BUILD_CERTIFICATE_PASSWORD: ${{ secrets.ORG_MACOS_BUILD_CERTIFICATE_PASSWORD }}
+        run: |
+          # Decode Base64-encoded .p12 and save it as a file.
+          BUILD_CERTIFICATE_PATH=$RUNNER_TEMP/certificate.p12
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $BUILD_CERTIFICATE_PATH
+          # Create a temporary keychain.
+          CODESIGN_KEYCHAIN_PATH=$RUNNER_TEMP/codesign.keychain-db
+          CODESIGN_KEYCHAIN_PASSWORD=$(uuidgen)
+          security create-keychain -p "$CODESIGN_KEYCHAIN_PASSWORD" $CODESIGN_KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $CODESIGN_KEYCHAIN_PATH
+          security unlock-keychain -p "$CODESIGN_KEYCHAIN_PASSWORD" $CODESIGN_KEYCHAIN_PATH
+          # Import the certificate to the new keychain.
+          security import $BUILD_CERTIFICATE_PATH -P "$BUILD_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $CODESIGN_KEYCHAIN_PATH
+          security list-keychain -d user -s $CODESIGN_KEYCHAIN_PATH
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Set up Glyphs
+        env:
+          GITHUB_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
+        run: |
+          # Download the latest Glyphs distributions from our GitHub mirror and put them into /Applications.
+          mkdir -p externals
+          G3_ASSET_NAME=$(gh release view --repo morisawa-fontdev/glyphsapp-versions g3 --json assets --jq '.assets[-1].name')
+          G2_ASSET_NAME=$(gh release view --repo morisawa-fontdev/glyphsapp-versions g2 --json assets --jq '.assets[-1].name')
+          (cd externals && gh release download --repo morisawa-fontdev/glyphsapp-versions g3 --pattern "$G3_ASSET_NAME")
+          (cd externals && gh release download --repo morisawa-fontdev/glyphsapp-versions g2 --pattern "$G2_ASSET_NAME")
+          ditto -xk externals/*.zip /Applications && xattr -r -d com.apple.quarantine /Applications/Glyphs*.app
+          rm -rf externals
+      - name: Checkout tools for codesign/notarization
+        uses: actions/checkout@v3
+        with:
+          repository: morisawa-fontdev/postbuild-tools-macos
+          token: ${{ secrets.ORG_GITHUB_TOKEN || secrets.GITHUB_TOKEN || github.token }}
+          path: postbuild-tools-macos
+      - name: Set up tools for codesign/notarization
+        run: |
+          # Put the executables into '.bin' and make the tools available in the following steps.
+          mkdir -p "$(pwd)/.bin"
+          mv postbuild-tools-macos/postbuild-* "$(pwd)/.bin"
+          rm -r postbuild-tools-macos
+          echo "$(pwd)/.bin" >> "$GITHUB_PATH"
+      - name: Install dependencies
+        run: |
+          # Install dependencies via 'Brewfile'.
+          if [ -f Brewfile ]; then
+            brew update && brew bundle
+          fi
+          # Install dependencies via requirements.txt.
+          # Expects the version of each dependent package is pinned.
+          if [ -f requirements.txt ]; then
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+          fi
+      - name: Build
+        run: |
+          make dist
+      - name: Generate filename components
+        id: filename_components
+        run: |
+          # Generate the artifact filename using the refname or the short sha.
+          echo "repo_name=$(echo ${{ github.repository }} | sed -E 's/^.*\///')" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+              echo "ref_name=$(echo "${GITHUB_REF_NAME}")" >> "$GITHUB_OUTPUT"
+          else
+              echo "ref_name=$(echo ${GITHUB_SHA} | cut -c1-8)" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.filename_components.outputs.repo_name }}-${{ steps.filename_components.outputs.ref_name }}
+          path: dist/*
+          retention-days: 3
