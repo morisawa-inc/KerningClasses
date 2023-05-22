@@ -9,6 +9,31 @@
 /* Begin PBXBuildFile section */
 		E71886F41DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */; };
 		E718870A1DC8495500DFABA6 /* KCKerningPair.m in Sources */ = {isa = PBXBuildFile; fileRef = E71887091DC8495500DFABA6 /* KCKerningPair.m */; };
+		E735E5DB2A170F2C007DBC3E /* KCKerningOutlineViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE85D1DC753EF00C31BEF /* KCKerningOutlineViewHandler.m */; };
+		E735E5DC2A170F2C007DBC3E /* KCFontMasterStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9F41E0A251D00AF08E1 /* KCFontMasterStore.m */; };
+		E735E5DD2A170F2C007DBC3E /* KCKerningPair.m in Sources */ = {isa = PBXBuildFile; fileRef = E71887091DC8495500DFABA6 /* KCKerningPair.m */; };
+		E735E5DE2A170F2C007DBC3E /* KerningClassesPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8431DC7424900C31BEF /* KerningClassesPlugin.m */; };
+		E735E5DF2A170F2C007DBC3E /* KCWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8511DC7432400C31BEF /* KCWindowController.m */; };
+		E735E5E02A170F2C007DBC3E /* KCKerningEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8541DC7442700C31BEF /* KCKerningEntry.m */; };
+		E735E5E12A170F2C007DBC3E /* KCKerningEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8601DC759E600C31BEF /* KCKerningEntries.m */; };
+		E735E5E22A170F2C007DBC3E /* RSJumpBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9E61E0A126600AF08E1 /* RSJumpBarButton.m */; };
+		E735E5E32A170F2C007DBC3E /* RSJumpBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9EA1E0A126600AF08E1 /* RSJumpBarItem.m */; };
+		E735E5E42A170F2C007DBC3E /* KCGlyphListOutlineViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */; };
+		E735E5E52A170F2C007DBC3E /* KCKerningGroups.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7B895B61E0E5442009357CE /* KCKerningGroups.mm */; };
+		E735E5E62A170F2C007DBC3E /* KCUserDefinedColors.m in Sources */ = {isa = PBXBuildFile; fileRef = E7D0D5131E27388C0074E78B /* KCUserDefinedColors.m */; };
+		E735E5E72A170F2C007DBC3E /* KCJumpBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9F11E0A23F100AF08E1 /* KCJumpBar.m */; };
+		E735E5E82A170F2C007DBC3E /* KCOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7CCE8561DC7442700C31BEF /* KCOutlineView.m */; };
+		E735E5E92A170F2C007DBC3E /* RSJumpBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9E41E0A126600AF08E1 /* RSJumpBar.m */; };
+		E735E5EB2A170F2C007DBC3E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7CCE83B1DC7424900C31BEF /* Cocoa.framework */; };
+		E735E5EE2A170F2C007DBC3E /* RSJumpBarChevron@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9E81E0A126600AF08E1 /* RSJumpBarChevron@2x.png */; };
+		E735E5EF2A170F2C007DBC3E /* RSJumpBarChevron.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9E71E0A126600AF08E1 /* RSJumpBarChevron.png */; };
+		E735E5F02A170F2C007DBC3E /* GSFontMasterIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9FE1E0A5B5F00AF08E1 /* GSFontMasterIcon@2x.png */; };
+		E735E5F12A170F2C007DBC3E /* GSFontIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9F81E0A455900AF08E1 /* GSFontIcon.png */; };
+		E735E5F22A170F2C007DBC3E /* GSFontMasterIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9FD1E0A5B5F00AF08E1 /* GSFontMasterIcon.png */; };
+		E735E5F32A170F2C007DBC3E /* Colors.json in Resources */ = {isa = PBXBuildFile; fileRef = E7D0D5151E2748E60074E78B /* Colors.json */; };
+		E735E5F42A170F2C007DBC3E /* GSFontIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9F91E0A455900AF08E1 /* GSFontIcon@2x.png */; };
+		E735E5F52A170F2C007DBC3E /* KCWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7CCE84E1DC7430200C31BEF /* KCWindowController.xib */; };
+		E735E5FF2A170FF5007DBC3E /* GlyphsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E735E5FE2A170FF4007DBC3E /* GlyphsCore.framework */; };
 		E797B9EB1E0A126600AF08E1 /* RSJumpBar.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9E41E0A126600AF08E1 /* RSJumpBar.m */; };
 		E797B9EC1E0A126600AF08E1 /* RSJumpBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E797B9E61E0A126600AF08E1 /* RSJumpBarButton.m */; };
 		E797B9ED1E0A126600AF08E1 /* RSJumpBarChevron.png in Resources */ = {isa = PBXBuildFile; fileRef = E797B9E71E0A126600AF08E1 /* RSJumpBarChevron.png */; };
@@ -39,6 +64,8 @@
 		E71886F31DC7661A00DFABA6 /* KCGlyphListOutlineViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCGlyphListOutlineViewHandler.m; sourceTree = "<group>"; };
 		E71887081DC8495500DFABA6 /* KCKerningPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCKerningPair.h; sourceTree = "<group>"; };
 		E71887091DC8495500DFABA6 /* KCKerningPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCKerningPair.m; sourceTree = "<group>"; };
+		E735E5F92A170F2C007DBC3E /* KerningClasses.glyphsPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KerningClasses.glyphsPlugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		E735E5FE2A170FF4007DBC3E /* GlyphsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlyphsCore.framework; path = "/Applications/Glyphs 3.app/Contents/Frameworks/GlyphsCore.framework"; sourceTree = "<absolute>"; };
 		E756CAB91E0A84DF004460C5 /* KCFontMasterStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCFontMasterStore.h; sourceTree = "<group>"; };
 		E797B9E31E0A126600AF08E1 /* RSJumpBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSJumpBar.h; sourceTree = "<group>"; };
 		E797B9E41E0A126600AF08E1 /* RSJumpBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSJumpBar.m; sourceTree = "<group>"; };
@@ -80,6 +107,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E735E5EA2A170F2C007DBC3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E735E5FF2A170FF5007DBC3E /* GlyphsCore.framework in Frameworks */,
+				E735E5EB2A170F2C007DBC3E /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E7CCE8351DC7424900C31BEF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -120,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				E7CCE8381DC7424900C31BEF /* KerningClasses.glyphsPlugin */,
+				E735E5F92A170F2C007DBC3E /* KerningClasses.glyphsPlugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -175,6 +212,7 @@
 			children = (
 				E7D0D5151E2748E60074E78B /* Colors.json */,
 				E7CCE8481DC7424900C31BEF /* Info.plist */,
+				E735E5FE2A170FF4007DBC3E /* GlyphsCore.framework */,
 				E7CCE8461DC7424900C31BEF /* GlyphsCore.framework */,
 			);
 			name = "Supporting Files";
@@ -183,6 +221,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E735E5D92A170F2C007DBC3E /* KerningClasses3 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E735E5F62A170F2C007DBC3E /* Build configuration list for PBXNativeTarget "KerningClasses3" */;
+			buildPhases = (
+				E735E5DA2A170F2C007DBC3E /* Sources */,
+				E735E5EA2A170F2C007DBC3E /* Frameworks */,
+				E735E5ED2A170F2C007DBC3E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KerningClasses3;
+			productName = CSKerningClasses;
+			productReference = E735E5F92A170F2C007DBC3E /* KerningClasses.glyphsPlugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		E7CCE8371DC7424900C31BEF /* KerningClasses */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E7CCE84B1DC7424900C31BEF /* Build configuration list for PBXNativeTarget "KerningClasses" */;
@@ -230,12 +285,28 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				E735E5D92A170F2C007DBC3E /* KerningClasses3 */,
 				E7CCE8371DC7424900C31BEF /* KerningClasses */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E735E5ED2A170F2C007DBC3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E735E5EE2A170F2C007DBC3E /* RSJumpBarChevron@2x.png in Resources */,
+				E735E5EF2A170F2C007DBC3E /* RSJumpBarChevron.png in Resources */,
+				E735E5F02A170F2C007DBC3E /* GSFontMasterIcon@2x.png in Resources */,
+				E735E5F12A170F2C007DBC3E /* GSFontIcon.png in Resources */,
+				E735E5F22A170F2C007DBC3E /* GSFontMasterIcon.png in Resources */,
+				E735E5F32A170F2C007DBC3E /* Colors.json in Resources */,
+				E735E5F42A170F2C007DBC3E /* GSFontIcon@2x.png in Resources */,
+				E735E5F52A170F2C007DBC3E /* KCWindowController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E7CCE8361DC7424900C31BEF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -254,6 +325,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E735E5DA2A170F2C007DBC3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E735E5DB2A170F2C007DBC3E /* KCKerningOutlineViewHandler.m in Sources */,
+				E735E5DC2A170F2C007DBC3E /* KCFontMasterStore.m in Sources */,
+				E735E5DD2A170F2C007DBC3E /* KCKerningPair.m in Sources */,
+				E735E5DE2A170F2C007DBC3E /* KerningClassesPlugin.m in Sources */,
+				E735E5DF2A170F2C007DBC3E /* KCWindowController.m in Sources */,
+				E735E5E02A170F2C007DBC3E /* KCKerningEntry.m in Sources */,
+				E735E5E12A170F2C007DBC3E /* KCKerningEntries.m in Sources */,
+				E735E5E22A170F2C007DBC3E /* RSJumpBarButton.m in Sources */,
+				E735E5E32A170F2C007DBC3E /* RSJumpBarItem.m in Sources */,
+				E735E5E42A170F2C007DBC3E /* KCGlyphListOutlineViewHandler.m in Sources */,
+				E735E5E52A170F2C007DBC3E /* KCKerningGroups.mm in Sources */,
+				E735E5E62A170F2C007DBC3E /* KCUserDefinedColors.m in Sources */,
+				E735E5E72A170F2C007DBC3E /* KCJumpBar.m in Sources */,
+				E735E5E82A170F2C007DBC3E /* KCOutlineView.m in Sources */,
+				E735E5E92A170F2C007DBC3E /* RSJumpBar.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E7CCE8341DC7424900C31BEF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -279,6 +372,39 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		E735E5F72A170F2C007DBC3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)/Library/Application Support/Glyphs 3/Plugins";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SYSTEM_APPS_DIR)/Glyphs 3.app/Contents/Frameworks\"";
+				INFOPLIST_FILE = "$(PROJECT_NAME)/Info.plist";
+				INSTALL_PATH = /;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.morisawa.$(PROJECT_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = glyphsPlugin;
+			};
+			name = Debug;
+		};
+		E735E5F82A170F2C007DBC3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SYSTEM_APPS_DIR)/Glyphs 3.app/Contents/Frameworks\"";
+				INFOPLIST_FILE = "$(PROJECT_NAME)/Info.plist";
+				INSTALL_PATH = /;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.morisawa.$(PROJECT_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = glyphsPlugin;
+			};
+			name = Release;
+		};
 		E7CCE8491DC7424900C31BEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -385,16 +511,17 @@
 		E7CCE84C1DC7424900C31BEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(HOME)/Library/Application Support/Glyphs/Plugins";
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)/Library/Application Support/Glyphs/Plugins";
-				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_APPS_DIR)/Glyphs.app/Contents/Frameworks";
-				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SYSTEM_APPS_DIR)/Glyphs.app/Contents/Frameworks\"";
+				INFOPLIST_FILE = "$(PROJECT_NAME)/Info.plist";
 				INSTALL_PATH = /;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.morisawa.$(TARGET_NAME)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.morisawa.$(PROJECT_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = glyphsPlugin;
 			};
@@ -403,13 +530,14 @@
 		E7CCE84D1DC7424900C31BEF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SYSTEM_APPS_DIR)/Glyphs.app/Contents/Frameworks";
-				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SYSTEM_APPS_DIR)/Glyphs.app/Contents/Frameworks\"";
+				INFOPLIST_FILE = "$(PROJECT_NAME)/Info.plist";
 				INSTALL_PATH = /;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.morisawa.$(TARGET_NAME)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.morisawa.$(PROJECT_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = glyphsPlugin;
 			};
@@ -418,6 +546,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E735E5F62A170F2C007DBC3E /* Build configuration list for PBXNativeTarget "KerningClasses3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E735E5F72A170F2C007DBC3E /* Debug */,
+				E735E5F82A170F2C007DBC3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E7CCE8331DC7424900C31BEF /* Build configuration list for PBXProject "KerningClasses" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

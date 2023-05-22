@@ -58,7 +58,8 @@
 - (NSColor *)colorWithJSONObject:(id)anObject {
     NSColor *color = nil;
     if ([anObject isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *dictionary = (NSDictionary *)anObject;
+        NSString *style = [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Light"] ? @"light" : @"dark";
+        NSDictionary *dictionary = [(NSDictionary *)anObject objectForKey:style];
         NSNumber *red   = [dictionary objectForKey:@"red"];
         NSNumber *green = [dictionary objectForKey:@"green"];
         NSNumber *blue  = [dictionary objectForKey:@"blue"];

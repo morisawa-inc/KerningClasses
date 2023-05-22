@@ -1,20 +1,42 @@
 {
-  "class_class": {
-    "red":   0.0,
-    "green": 0.0,
-    "blue":  0.0,
-    "alpha": 0.66,
+  "light": {
+      "class_class": {
+        "red":   0.0,
+        "green": 0.0,
+        "blue":  0.0,
+        "alpha": 0.66,
+      },
+      "exception": {
+        "red":   0.0,
+        "green": 0.0,
+        "blue":  0.0,
+        "alpha": 1.0
+      },
+      "orphaned": {
+        "red":   1.0,
+        "green": 0.0,
+        "blue":  0.0,
+        "alpha": 1.0
+      }
   },
-  "exception": {
-    "red":   0.0,
-    "green": 0.0,
-    "blue":  0.0,
-    "alpha": 1.0
-  },
-  "orphaned": {
-    "red":   1.0,
-    "green": 0.0,
-    "blue":  0.0,
-    "alpha": 1.0
+  "dark": {
+      "class_class": {
+        "red":   1.0,
+        "green": 1.0,
+        "blue":  1.0,
+        "alpha": 0.66,
+      },
+      "exception": {
+        "red":   1.0,
+        "green": 1.0,
+        "blue":  1.0,
+        "alpha": 1.0
+      },
+      "orphaned": {
+        "red":   1.0,
+        "green": 0.0,
+        "blue":  0.0,
+        "alpha": 1.0
+      }
   }
 }

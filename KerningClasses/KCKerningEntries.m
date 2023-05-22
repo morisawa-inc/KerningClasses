@@ -30,6 +30,53 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
     KCKerningValueFilterValueComparatorLessThanOrEquals
 };
 
+#ifndef GLYPHS3
+#define GSWritingDirectionVertical GSWritingDirectionVerticalToLeft
+#endif
+
+#ifndef GSWritingDirectionIsLTR
+#define GSWritingDirectionIsLTR(d) ((d & GSWritingDirectionRightToLeft) == 0)
+#endif
+#ifndef GSWritingDirectionIsRTL
+#define GSWritingDirectionIsRTL(d) ((d & GSWritingDirectionRightToLeft) == GSWritingDirectionRightToLeft)
+#endif
+
+@interface GSFont (GSFontCompatibility)
+- (MGOrderedDictionary *)kerningForDirection:(GSWritingDirection)direction;
+- (MGOrderedDictionary *)kerning;
+- (MGOrderedDictionary *)verticalKerning;
+@end
+
+@interface GSLayer (GSLayerCompatibility)
+- (BOOL)previousKerningExeptionForLayer:(GSLayer *)previousLayer direction:(GSWritingDirection)direction;
+- (BOOL)nextKerningExeptionForLayer:(GSLayer *)nextLayer direction:(GSWritingDirection)direction;
+- (BOOL)leftKerningExeptionForLayer:(GSLayer *)nextLayer;
+- (BOOL)rightKerningExeptionForLayer:(GSLayer *)nextLayer;
+
+@end
+
+static inline MGOrderedDictionary * GSFontGetKerningDictionary(GSFont *font, GSWritingDirection direction) {
+    if ([font respondsToSelector:@selector(kerningForDirection:)]) {
+        return [font kerningForDirection:direction];
+    } else {
+        return (direction == GSWritingDirectionVertical) ? [font verticalKerning] : [font kerning];
+    }
+}
+
+static inline BOOL GSLayerHasNextKerningExeption(GSLayer *layer, GSLayer *targetLayer, GSWritingDirection direction) {
+    if ([layer respondsToSelector:@selector(nextKerningExeptionForLayer:direction:)]) {
+        [layer nextKerningExeptionForLayer:targetLayer direction:direction];
+    } else {
+        if (GSWritingDirectionIsLTR(direction) && [layer respondsToSelector:@selector(rightKerningExeptionForLayer:)]) {
+            [layer rightKerningExeptionForLayer:targetLayer];
+        } else if (GSWritingDirectionIsRTL(direction) && [layer respondsToSelector:@selector(leftKerningExeptionForLayer:)]) {
+            [layer leftKerningExeptionForLayer:targetLayer];
+        }
+    }
+    return NO;
+    
+}
+
 @interface KCKerningEntryFilter : NSObject
 
 @property (nonatomic, readonly) NSString *queryString;
@@ -152,7 +199,8 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
 - (NSArray<KCKerningEntry *> *)entries {
     //
     GSFont *font = [_fontMaster font];
-    NSDictionary *dictionary = [(NSDictionary *)[font kerning] objectForKey:[_fontMaster id]];
+    
+    NSDictionary *dictionary = [(NSDictionary *)GSFontGetKerningDictionary(font, GSWritingDirectionLeftToRight) objectForKey:[_fontMaster id]];
     //
     NSMutableOrderedSet *mutableKerningPairs = [[NSMutableOrderedSet alloc] initWithCapacity:0];
     for (NSString *left in dictionary) {
@@ -219,7 +267,7 @@ typedef NS_ENUM(NSUInteger, KCKerningValueFilterValueComparator) {
                 GSLayer *leftLayer  = [[leftGlyph  layers] objectForKey:[_fontMaster id]];
                 GSLayer *rightLayer = [[rightGlyph layers] objectForKey:[_fontMaster id]];
                 if (leftLayer && rightLayer) {
-                    if ([leftLayer rightKerningExeptionForLayer:rightLayer]) {
+                    if (GSLayerHasNextKerningExeption(leftLayer, rightLayer, GSWritingDirectionLeftToRight)) {
                         NSString *leftKey = [leftGlyph rightKerningGroup];
                         if (leftKey) {
                             leftKey = [NSString stringWithFormat:@"@MMK_L_%@", leftKey];

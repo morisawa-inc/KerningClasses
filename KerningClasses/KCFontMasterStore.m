@@ -13,6 +13,15 @@
 @property(retain, nonatomic) GSFont *font;
 @end
 
+@interface GSFont (GSFontCompatibility)
+- (NSString *)fontName;
+- (NSString *)familyName;
+@end
+
+static inline NSString * GSFontGetFamilyName(GSFont *font) {
+    return [font respondsToSelector:@selector(fontName)] ? [font fontName] : [font familyName];
+}
+
 @implementation KCFontMasterStore
 
 + (instancetype)currentFontMasterStore {
@@ -35,13 +44,13 @@
     if (_font && _fontMaster) {
         NSDocument *document = (NSDocument *)[_font parent];
         title = [[[document fileURL] path] lastPathComponent];
-        if (!title) title = [_font familyName];
+        if (!title) title = GSFontGetFamilyName(_font);
         title = [title stringByAppendingString:@" - "];
         title = [title stringByAppendingString:[_fontMaster name]];
     } else if (_font) {
         NSDocument *document = (NSDocument *)[_font parent];
         title = [[[document fileURL] path] lastPathComponent];
-        if (!title) title = [_font familyName];
+        if (!title) title = GSFontGetFamilyName(_font);
     }
     return title;
 }
