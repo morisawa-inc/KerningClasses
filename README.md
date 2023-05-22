@@ -37,7 +37,7 @@ A Glyphs plugin to examine kerning values with a plain old interface.
 
 ## Requirements
 
-Tested with Glyphs 2.3 on OS X 10.11.
+Tested with Glyphs 2.3 on OS X 10.11 and Glyphs 3 on macOS 10.15.7.
 
 ## License
 
