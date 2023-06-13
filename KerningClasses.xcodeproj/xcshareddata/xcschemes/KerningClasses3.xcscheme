@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E735E5D92A170F2C007DBC3E"
-               BuildableName = "KerningClasses3.glyphsPlugin"
+               BuildableName = "KerningClasses.glyphsPlugin"
                BlueprintName = "KerningClasses3"
                ReferencedContainer = "container:KerningClasses.xcodeproj">
             </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E735E5D92A170F2C007DBC3E"
-            BuildableName = "KerningClasses3.glyphsPlugin"
+            BuildableName = "KerningClasses.glyphsPlugin"
             BlueprintName = "KerningClasses3"
             ReferencedContainer = "container:KerningClasses.xcodeproj">
          </BuildableReference>
