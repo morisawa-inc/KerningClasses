@@ -41,4 +41,4 @@ Tested with Glyphs 2.3 on OS X 10.11 and Glyphs 3 on macOS 10.15.7.
 
 ## License
 
-TBD
+Apache License 2.0
